@@ -16,6 +16,7 @@ class Times:
     cities.cities()
     tf = TimezoneFinder()
 
+    # Old
     def get_data(self):
         url = "https://api.sunrise-sunset.org/json"
         params = {
@@ -338,6 +339,7 @@ class Times:
         hebrew_date = hebrew.from_gregorian(current_date.year, current_date.month, current_date.day)
         return hebrew_date
 
+    # Old
     def debug(self):
         times = Times()
         print(times.sunrise(cities.CapeTown))

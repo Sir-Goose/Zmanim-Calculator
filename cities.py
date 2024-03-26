@@ -14,8 +14,10 @@ class Cities:
                 self.data[city] = (latitude, longitude)
 
             print("City data loaded.")
+
     def get_coordinates(self, city):
         return self.data[city][0], self.data[city][1]
+
 
 class CapeTown:
     latitude = -33.9249

@@ -38,6 +38,7 @@ def index():
         shaah_zmanit = round(Times.shaah_zmanit(city) * 60, 2)
         current_date = Times.get_current_hebrew_date(city)
     else:
+        # Cape Town is the default city
         dawn = Times.dawn("Cape Town")
         earliest_tallit = Times.earliest_tallit_tefillin("Cape Town")
         sunrise = Times.sunrise("Cape Town")
