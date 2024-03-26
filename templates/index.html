@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zmanim - Halachic Times</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zmanim - Halachic Times</h1>
+    <h3>City: {{ city }}</h3>
+    <p>Current Date: {{ current_date }}</p>
+    <input type="text" id="citySearch" placeholder="Search for a city" oninput="searchCities()">
+    <select id="citySelect" name="selectedCity">
+    </select>
+    <button onclick="submitForm()">Calculate</button>
+    <table>
+        <tr>
+            <th>Zmanim</th>
+            <th>Time</th>
+        </tr>
+        <tr>
+            <td>Dawn (Alot Hashachar)</td>
+            <td>{{ dawn }}</td>
+        </tr>
+        <tr>
+            <td>Earliest Tallit and Tefillin (Misheyakir)</td>
+            <td>{{ earliest_tallit }}</td>
+        </tr>
+        <tr>
+            <td>Sunrise (Hanetz Hachamah)</td>
+            <td>{{ sunrise }}</td>
+        </tr>
+        <tr>
+            <td>Latest Shema</td>
+            <td>{{ latest_shema }}</td>
+        </tr>
+        <tr>
+            <td>Latest Shacharit</td>
+            <td>{{ latest_shacharit }}</td>
+        </tr>
+        <tr>
+            <td>Midday (Chatzot Hayom)</td>
+            <td>{{ midday }}</td>
+        </tr>
+        <tr>
+            <td>Earliest Mincha (Mincha Gedolah)</td>
+            <td>{{ earliest_mincha }}</td>
+        </tr>
+        <tr>
+            <td>Mincha Ketanah ("Small Mincha")</td>
+            <td>{{ mincha_ketana }}</td>
+        </tr>
+        <tr>
+            <td>Plag Hamincha ("Half of Mincha")</td>
+            <td>{{ plag_hamincha }}</td>
+        </tr>
+        <tr>
+            <td>Sunset (Shkiah)</td>
+            <td>{{ sunset }}</td>
+        </tr>
+        <tr>
+            <td>Nightfall (Tzeit Hakochavim)</td>
+            <td>{{ nightfall }}</td>
+        </tr>
+        <tr>
+            <td>Midnight (Chatzot HaLailah</td>
+            <td>{{ midnight }}</td>
+        </tr>
+        <tr>
+            <td>Shaah Zmanit (proportional hour)</td>
+            <td>{{ shaah_zmanit }} minutes</td>
+        </tr>
+    </table>
+
+    <script>
+        var cities = {{ cities|tojson }};
+
+        function searchCities() {
+            var input = document.getElementById('citySearch');
+            var filter = input.value.toUpperCase();
+            var select = document.getElementById('citySelect');
+            select.innerHTML = '';
+
+            for (var i = 0; i < cities.length; i++) {
+                var city = cities[i];
+                if (city[0].toUpperCase().indexOf(filter) > -1) {
+                    var option = document.createElement('option');
+                    option.text = city[0];
+                    option.value = city[0];
+                    select.add(option);
+                }
+            }
+        }
+
+        function submitForm() {
+            var selectedCity = document.getElementById('citySelect').value;
+            var url = '/?selectedCity=' + encodeURIComponent(selectedCity);
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
