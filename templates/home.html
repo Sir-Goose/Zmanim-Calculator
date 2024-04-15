@@ -2,26 +2,31 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <title>Home Page</title>
+    <title>City Search</title>
 </head>
 <body>
-        <div class="logo">
-            <img src= "{{ url_for('static', filename='logo.png') }}" }alt="Logo">
-        </div>
-
-
+    <main>
+        <header>
+            <div class="logo">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+                <h1>Search for your city</h1>
+            </div>
+        </header>
         <div class="search-container">
             <form action="/search" method="GET">
-                <label>
-                    <input type="text" name="query" placeholder="Search...">
-                </label>
+                <input type="text" name="query" placeholder="Search for a city..." list="cities">
+                <datalist id="cities">
+                    {% for city in cities %}
+                        <option value="{{ city }}">
+                    {% endfor %}
+                </datalist>
                 <button type="submit">Search</button>
             </form>
         </div>
-
+    </main>
 
     <footer>
-        <p>Matthew Allison - GitHub</p>
+        <p>Matthew Allison Github</p>
     </footer>
 </body>
 </html>
