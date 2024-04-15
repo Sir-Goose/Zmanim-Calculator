@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Home Page</title>
+</head>
+<body>
+        <div class="logo">
+            <img src= "{{ url_for('static', filename='logo.png') }}" }alt="Logo">
+        </div>
+
+
+        <div class="search-container">
+            <form action="/search" method="GET">
+                <label>
+                    <input type="text" name="query" placeholder="Search...">
+                </label>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+
+    <footer>
+        <p>Matthew Allison - GitHub</p>
+    </footer>
+</body>
+</html>
