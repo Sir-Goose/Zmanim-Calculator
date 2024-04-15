@@ -15,6 +15,9 @@ def read_cities_from_csv(file_path):
             cities_list.append(row)
     return cities_list
 
+@app.route('/home', methods=['GET'])
+def home():
+    return render_template('home.html')
 
 @app.route('/', methods=['GET'])
 def index():

@@ -49,11 +49,9 @@ class Times:
         latitude, longitude = self.cities.get_coordinates(city)
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
-
         current_date = datetime.now(timezone('UTC')).date()
 
         dawn = sun(location.observer, date=current_date, dawn_dusk_depression=16.9)
-
         dawn_time_utc = dawn['dawn']
 
         location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
@@ -67,10 +65,13 @@ class Times:
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
         current_date = datetime.now(timezone('UTC')).date()
+
         tallit_tefillin = sun(location.observer, date=current_date, dawn_dusk_depression=10.2)
         tallit_tefillin_utc = tallit_tefillin['dawn']
+
         location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
         adjust_tallit_tefillin = tallit_tefillin_utc.astimezone(location_timezone)
+
         tallit_tefillin_time = adjust_tallit_tefillin.strftime("%H:%M")
         return tallit_tefillin_time
 
@@ -78,11 +79,9 @@ class Times:
         latitude, longitude = self.cities.get_coordinates(city)
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
-
         current_date = datetime.now(timezone('UTC')).date()
 
         sun_times = sun(location.observer, date=current_date)
-
         sunrise_utc = sun_times['sunrise']
 
         location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
@@ -95,7 +94,6 @@ class Times:
         latitude, longitude = self.cities.get_coordinates(city)
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
-
         current_date = datetime.now(timezone('UTC')).date()
 
         hanetz_amiti = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dawn']
@@ -108,7 +106,6 @@ class Times:
         minutes = int(self.shaah_zmanit(city) * 60 * 3)
 
         latest_shema = time_obj + timedelta(minutes=minutes)
-
         latest_shema = latest_shema.strftime("%H:%M")
 
         return latest_shema
@@ -137,7 +134,6 @@ class Times:
         latitude, longitude = self.cities.get_coordinates(city)
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
-
         current_date = datetime.now(timezone('UTC')).date()
 
         dawn = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)
@@ -154,7 +150,6 @@ class Times:
         latitude, longitude = self.cities.get_coordinates(city)
 
         location = LocationInfo(longitude=longitude, latitude=latitude)
-
         current_date = datetime.now(timezone('UTC')).date()
 
         dusk = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)
