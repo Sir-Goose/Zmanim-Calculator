@@ -1,12 +1,82 @@
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
+body {
+    background-image: linear-gradient(to bottom, #efeee4, #f5f5ef);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 40px 0px;
 }
 
 .logo {
-  max-width: 50px;
-  max-height: 50px;
-  margin-top: 10vh;
+    text-align: center;
+}
+
+.logo img {
+    max-width: 200px;
+    max-height: 200px;
+    padding: 1px;
+}
+
+.logo h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #202124;
+    margin-top: 10px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.search-container {
+    text-align: center;
+}
+
+.search-container input[type="text"] {
+    width: 400px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #d8d8d2;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #f8f8f7;
+    color: #202124;
+    background-image: url('searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+}
+
+.search-container button[type="submit"] {
+    width: 100px;
+    background-color: #ba5b37;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-container button[type="submit"]:hover {
+    background-color: #ce673d;
+}
+
+footer {
+    background-color: #f5f5ef;
+    padding: 20px;
+    text-align: center;
 }
