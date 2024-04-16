@@ -15,19 +15,33 @@ def read_cities_from_csv(file_path):
             cities_list.append(row)
     return cities_list
 
+
 def strip_cords(cities_list):
     out_list = []
     for city in cities_list:
         out_list.append(city[0])
     return out_list
 
-@app.route('/home', methods=['GET'])
-def home():
-    return render_template('home.html', cities=read_cities_from_csv('cities.csv'))
 
 @app.route('/', methods=['GET'])
-def index():
-    selected_city = request.args.get('selectedCity')
+def home():
+    cities_list = read_cities_from_csv('cities.csv')
+    cities_list = strip_cords(cities_list)
+    return render_template('home.html', cities=cities_list)
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query')
+    query = query.replace('+', ' ')
+    return index(query)
+
+
+
+
+
+def index(selected_city="Cape Town"):
+    # selected_city = request.args.get('selectedCity')
     if selected_city:
         city = selected_city
         print("selected City: ", city)
