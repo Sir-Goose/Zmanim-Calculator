@@ -18,10 +18,7 @@
     <h1>Zmanim - Halachic Times</h1>
     <h3>City: {{ city }}</h3>
     <p>Current Date: {{ current_date }}</p>
-    <input type="text" id="citySearch" placeholder="Search for a city" oninput="searchCities()">
-    <select id="citySelect" name="selectedCity">
-    </select>
-    <button onclick="submitForm()">Calculate</button>
+
     <table>
         <tr>
             <th>Zmanim</th>
@@ -81,31 +78,5 @@
         </tr>
     </table>
     <!-- Load cities data from the server -->
-    <script>
-        var cities = {{ cities|tojson }};
-
-        function searchCities() {
-            var input = document.getElementById('citySearch');
-            var filter = input.value.toUpperCase();
-            var select = document.getElementById('citySelect');
-            select.innerHTML = '';
-
-            for (var i = 0; i < cities.length; i++) {
-                var city = cities[i];
-                if (city[0].toUpperCase().indexOf(filter) > -1) {
-                    var option = document.createElement('option');
-                    option.text = city[0];
-                    option.value = city[0];
-                    select.add(option);
-                }
-            }
-        }
-
-        function submitForm() {
-            var selectedCity = document.getElementById('citySelect').value;
-            var url = '/?selectedCity=' + encodeURIComponent(selectedCity);
-            window.location.href = url;
-        }
-    </script>
 </body>
 </html>
