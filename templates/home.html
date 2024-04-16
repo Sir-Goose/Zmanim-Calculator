@@ -13,8 +13,8 @@
             </div>
         </header>
         <div class="search-container">
-            <form action="/search" method="GET">
-                <input type="text" name="query" placeholder="Search for a city..." list="cities">
+            <form action="/search" method="GET" id="search-form">
+                <input type="text" name="query" id="query" placeholder="Search for a city..." list="cities">
                 <datalist id="cities">
                     {% for city in cities %}
                         <option value="{{ city }}">
@@ -30,5 +30,20 @@
             <p>Matthew Allison GitHub</p>
         </a>
     </footer>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            var input = document.getElementById('query');
+            var datalist = document.getElementById('cities');
+            var options = datalist.options;
+
+            for (var i = 0; i < options.length; i++) {
+                if (options[i].value.toLowerCase().startsWith(input.value.toLowerCase())) {
+                    input.value = options[i].value;
+                    break;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
