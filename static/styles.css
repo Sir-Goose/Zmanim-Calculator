@@ -11,7 +11,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px 40px 0px;
+    padding: 4px 4px 0px;
 }
 
 .logo {
@@ -24,11 +24,24 @@ header {
     padding: 1px;
 }
 
+@font-face {
+    font-family: 'CustomFont';
+    src: url("fonts/tiemposheadline-regular-webfont.woff2") format("woff2"),
+        url("fonts/tiemposheadline-regular-webfont.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 .logo h1 {
+    font-family: CustomFont, monospace, system-ui-serif, serif;
     font-size: 2.5rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #202124;
     margin-top: 10px;
+    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 main {
@@ -51,32 +64,55 @@ main {
     border: 1px solid #d8d8d2;
     border-radius: 20px;
     font-size: 16px;
+    outline: none;
     background-color: #f8f8f7;
     color: #202124;
-    background-image: url('searchicon.png');
-    background-position: 10px 12px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
+    padding: 15px 20px 15px 40px;
+    font-family: "system-ui", "ui-sans-serif";
 }
 
 .search-container button[type="submit"] {
     width: 100px;
     background-color: #ba5b37;
     color: white;
-    padding: 14px 20px;
+    padding: 15px 20px;
     margin: 8px 0;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
+    font-family: "system-ui", "ui-sans-serif";
 }
 
 .search-container button[type="submit"]:hover {
     background-color: #ce673d;
 }
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/materialicons/v70/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+.footer-link {
+    display: inline-block;
+    color: #202124;
+    text-decoration: none;
+    font-family: "system-ui", serif;
+    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 500;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #45494d;
+}
+
 
 footer {
     background-color: #f5f5ef;
-    padding: 20px;
     text-align: center;
+    font-family: "system-ui-serif", "serif";
 }
