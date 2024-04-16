@@ -15,9 +15,15 @@ def read_cities_from_csv(file_path):
             cities_list.append(row)
     return cities_list
 
+def strip_cords(cities_list):
+    out_list = []
+    for city in cities_list:
+        out_list.append(city[0])
+    return out_list
+
 @app.route('/home', methods=['GET'])
 def home():
-    return render_template('home.html')
+    return render_template('home.html', cities=read_cities_from_csv('cities.csv'))
 
 @app.route('/', methods=['GET'])
 def index():
