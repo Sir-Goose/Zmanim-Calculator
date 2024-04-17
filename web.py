@@ -80,7 +80,7 @@ def index(selected_city="Cape Town"):
 
     cities_list = read_cities_from_csv('cities.csv')
 
-    return render_template('index.html', current_date=current_date, dawn=dawn, earliest_tallit=earliest_tallit,
+    return render_template('times.html', current_date=current_date, dawn=dawn, earliest_tallit=earliest_tallit,
                            sunrise=sunrise, latest_shema=latest_shema, latest_shacharit=latest_shacharit,
                            midday=midday, earliest_mincha=earliest_mincha, mincha_ketana=mincha_ketana,
                            plag_hamincha=plag_hamincha, sunset=sunset, nightfall=nightfall, midnight=midnight,
