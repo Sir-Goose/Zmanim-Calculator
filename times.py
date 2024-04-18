@@ -4,8 +4,11 @@ from astral import LocationInfo
 from astral.sun import sun
 from datetime import datetime, timedelta
 from pytz import timezone
-from convertdate import hebrew
 from timezonefinder import TimezoneFinder
+from num2words import num2words
+from convertdate import hebrew
+
+import hebrew_converter
 
 
 class Times:
@@ -336,12 +339,39 @@ class Times:
         hebrew_date = hebrew_date.replace('(', ' ').replace(')', ' ').replace(',', '')
         return hebrew_date
 
+    def get_current_hebrew_date_words(self, city):
+        number_date = self.get_current_hebrew_date(city)
+        number_date = number_date.strip()
+        number_date = number_date.split(' ')
+        print(number_date)
+        word_date = hebrew_converter.convert_to_words(number_date[0], number_date[1], number_date[2])
+        return word_date
+
+
+    def get_hebrew_date_30_days_ago(self, city):
+        latitude, longitude = self.cities.get_coordinates(city)
+        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
+        current_date = datetime.now(location_timezone).date()
+        thirty_days_ago = current_date - timedelta(days=30)
+        hebrew_date = hebrew.from_gregorian(thirty_days_ago.year, thirty_days_ago.month, thirty_days_ago.day)
+        hebrew_date = str(hebrew_date)
+        hebrew_date = hebrew_date.replace('(', ' ').replace(')', ' ').replace(',', '')
+        return hebrew_date
+
+
     def get_current_english_date(self, city):
         latitude, longitude = self.cities.get_coordinates(city)
         location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
         english_date = datetime.now(location_timezone).date()
         english_date = str(english_date)
         english_date = english_date.replace('-', ' ')
+        return english_date
+
+    def get_current_english_date_words(self, city):
+        latitude, longitude = self.cities.get_coordinates(city)
+        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
+        english_date = datetime.now(location_timezone).date()
+        english_date = english_date.strftime("%d %B %Y")
         return english_date
 
     # Old
