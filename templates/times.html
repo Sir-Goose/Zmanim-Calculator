@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <title>Zmanim - Halachic Times</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-    </style>
 </head>
 <body>
     <h1>Zmanim - Halachic Times</h1>
     <h3>City: {{ city }}</h3>
-    <p>Current Date: {{ current_date }}</p>
+    <p>English Date: {{ current_date_english }}</p>
+    <p>Hebrew Date: {{ current_date_hebrew }}</p>
 
     <table>
         <tr>
