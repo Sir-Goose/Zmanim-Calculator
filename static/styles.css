@@ -118,6 +118,94 @@ footer {
     text-align: center;
     font-family: "system-ui-serif", "serif";
 }
+
+/* Styles for times.html */
+h1 {
+    font-family: CustomFont, monospace, system-ui-serif, serif;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: #202124;
+    text-align: center;
+    margin-top: 20px;
+    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h3 {
+    font-family: "system-ui", "ui-sans-serif";
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #202124;
+    text-align: center;
+    margin-top: 10px;
+}
+
+p {
+    font-family: "system-ui", "ui-sans-serif";
+    font-size: 1.2rem;
+    color: #202124;
+    text-align: center;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: "system-ui", "ui-sans-serif";
+    font-size: 1.1rem;
+    color: #202124;
+    border: 1px solid #d8d8d2;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #d8d8d2;
+}
+
+th {
+    background-color: #f5f5ef;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f7;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* Media Queries */
+@media screen and (max-width: 30em) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+
 /* Media Queries */
 @media screen and (max-width: 30em) {
     .logo img {
