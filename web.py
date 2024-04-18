@@ -59,7 +59,8 @@ def index(selected_city="Cape Town"):
         nightfall = Times.nightfall(city)
         midnight = Times.midnight(city)
         shaah_zmanit = round(Times.shaah_zmanit(city) * 60, 2)
-        current_date = Times.get_current_hebrew_date(city)
+        current_date_hebrew = Times.get_current_hebrew_date(city)
+        current_date_english = Times.get_current_english_date(city)
     else:
         # Cape Town is the default city
         dawn = Times.dawn("Cape Town")
@@ -76,11 +77,13 @@ def index(selected_city="Cape Town"):
         midnight = Times.midnight("Cape Town")
         shaah_zmanit = round(Times.shaah_zmanit("Cape Town") * 60, 2)
         city = "Cape Town"
-        current_date = Times.get_current_hebrew_date("Cape Town")
+        current_date_hebrew = Times.get_current_hebrew_date("Cape Town")
+        current_date_english = Times.get_current_english_date("Cape Town")
+
 
     cities_list = read_cities_from_csv('cities.csv')
 
-    return render_template('times.html', current_date=current_date, dawn=dawn, earliest_tallit=earliest_tallit,
+    return render_template('times.html', current_date_english=current_date_english, current_date_hebrew=current_date_hebrew, dawn=dawn, earliest_tallit=earliest_tallit,
                            sunrise=sunrise, latest_shema=latest_shema, latest_shacharit=latest_shacharit,
                            midday=midday, earliest_mincha=earliest_mincha, mincha_ketana=mincha_ketana,
                            plag_hamincha=plag_hamincha, sunset=sunset, nightfall=nightfall, midnight=midnight,

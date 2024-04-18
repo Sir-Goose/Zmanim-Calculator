@@ -332,7 +332,17 @@ class Times:
         location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
         current_date = datetime.now(location_timezone).date()
         hebrew_date = hebrew.from_gregorian(current_date.year, current_date.month, current_date.day)
+        hebrew_date = str(hebrew_date)
+        hebrew_date = hebrew_date.replace('(', ' ').replace(')', ' ').replace(',', '')
         return hebrew_date
+
+    def get_current_english_date(self, city):
+        latitude, longitude = self.cities.get_coordinates(city)
+        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
+        english_date = datetime.now(location_timezone).date()
+        english_date = str(english_date)
+        english_date = english_date.replace('-', ' ')
+        return english_date
 
     # Old
     def debug(self):
