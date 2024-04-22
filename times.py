@@ -374,6 +374,25 @@ class Times:
         english_date = english_date.strftime("%d %B %Y")
         return english_date
 
+    def is_friday(self, city):
+        latitude, longitude = self.cities.get_coordinates(city)
+        location = LocationInfo(longitude=longitude, latitude=latitude)
+        current_date = datetime.now(timezone('UTC')).date()
+        day = sun(location.observer, date=current_date)['sunrise']
+        day = day.strftime("%A")
+        if day == "Friday":
+            return True
+        else:
+            return False
+
+    def candle_lighting(self, city):
+        sunset_time = self.sunset(city)
+        sunset_time_obj = datetime.strptime(sunset_time, "%H:%M")
+        sunset_time_obj = sunset_time_obj - timedelta(minutes=18)
+        candle_lighting_time = sunset_time_obj.strftime("%H:%M")
+        return candle_lighting_time
+
+
     # Old
     def debug(self):
         times = Times()
@@ -401,3 +420,7 @@ class Times:
         print(times.nightfall(cities.Johannesburg))
         print(times.midnight(cities.CapeTown))
         print(times.midnight(cities.Johannesburg))
+
+
+
+
