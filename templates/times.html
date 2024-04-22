@@ -13,6 +13,20 @@
     <div class="dates1">
         <p2>{{ current_date_english }}</p2>
     </div>
+
+    {% if is_friday %}
+    <table class="shabbat-table">
+        <tr>
+            <th>Shabbat</th>
+            <th>Time</th>
+        </tr>
+        <tr>
+            <td>Candle Lighting</td>
+            <td>{{ candle_lighting }}</td>
+        </tr>
+    </table>
+{% endif %}
+
     <table>
         <tr>
             <th>Zmanim</th>
@@ -71,6 +85,5 @@
             <td>{{ shaah_zmanit }} minutes</td>
         </tr>
     </table>
-    <!-- Load cities data from the server -->
 </body>
 </html>
