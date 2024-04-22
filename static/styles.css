@@ -32,7 +32,6 @@ header {
     font-style: normal;
 }
 
-
 .logo h1 {
     font-family: CustomFont, monospace, system-ui-serif, serif;
     font-size: 2.5rem;
@@ -170,6 +169,19 @@ table {
     width: 100%;
     max-width: 800px;
     margin: 20px auto;
+    border-collapse: collapse;
+    font-family: "system-ui", "ui-sans-serif";
+    font-size: 1.1rem;
+    color: #202124;
+    border: 1px solid #d8d8d2;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.shabbat-table {
+    width: 100%;
+    max-width: 800px;
+    margin:20px auto;
     border-collapse: collapse;
     font-family: "system-ui", "ui-sans-serif";
     font-size: 1.1rem;
