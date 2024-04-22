@@ -37,9 +37,6 @@ def search():
     return index(query)
 
 
-
-
-
 def index(selected_city="Cape Town"):
     # selected_city = request.args.get('selectedCity')
     if selected_city:
@@ -61,6 +58,8 @@ def index(selected_city="Cape Town"):
         shaah_zmanit = round(Times.shaah_zmanit(city) * 60, 2)
         current_date_hebrew = Times.get_current_hebrew_date_words(city)
         current_date_english = Times.get_current_english_date_words(city)
+        is_friday = Times.is_friday(city)
+        candle_lighting = Times.candle_lighting(city)
     else:
         # Cape Town is the default city
         dawn = Times.dawn("Cape Town")
@@ -79,7 +78,8 @@ def index(selected_city="Cape Town"):
         city = "Cape Town"
         current_date_hebrew = Times.get_current_hebrew_date_words("Cape Town")
         current_date_english = Times.get_current_english_date_words("Cape Town")
-
+        is_friday = Times.is_friday("Cape Town")
+        candle_lighting = Times.candle_lighting("Cape Town")
 
     cities_list = read_cities_from_csv('cities.csv')
 
@@ -87,7 +87,7 @@ def index(selected_city="Cape Town"):
                            sunrise=sunrise, latest_shema=latest_shema, latest_shacharit=latest_shacharit,
                            midday=midday, earliest_mincha=earliest_mincha, mincha_ketana=mincha_ketana,
                            plag_hamincha=plag_hamincha, sunset=sunset, nightfall=nightfall, midnight=midnight,
-                           shaah_zmanit=shaah_zmanit, city=city, cities=cities_list)
+                           shaah_zmanit=shaah_zmanit, city=city, cities=cities_list, is_friday=is_friday, candle_lighting=candle_lighting)
 
 
 if __name__ == '__main__':
