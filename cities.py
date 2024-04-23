@@ -1,8 +1,11 @@
 import csv
+from pytz import timezone
+from timezonefinder import TimezoneFinder
 
 
 class Cities:
     data = {}
+    tf = TimezoneFinder()
 
     def cities(self):
         with open('cities.csv', 'r') as file:
@@ -17,6 +20,9 @@ class Cities:
 
     def get_coordinates(self, city):
         return self.data[city][0], self.data[city][1]
+
+    def get_city_timezone(self, latitude, longitude):
+        return timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
 
 
 class CapeTown:
