@@ -183,6 +183,12 @@ table {
     overflow: hidden;
 }
 
+.table-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .shabbat-table {
     width: 100%;
     max-width: 800px;
@@ -213,6 +219,32 @@ tr:nth-child(even) {
 
 tr:last-child td {
     border-bottom: none;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: -10px;
+}
+
+.arrow-button {
+    background-color: #ba5b37;
+    border: none;
+    color: white;
+    padding: 3px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.arrow-button i {
+    vertical-align: middle;
 }
 
 
