@@ -17,13 +17,23 @@
 
     <div class="table-container">
         <div class="button-container">
-        <button class="arrow-button">
+    <form action="{{ url_for('update_offset') }}" method="POST">
+        <input type="hidden" name="city" value="{{ city }}">
+        <input type="hidden" name="action" value="decrement">
+        <input type="hidden" name="current_offset" value="{{ session.get('date_offset', 0) }}">
+        <button class="arrow-button" type="submit">
             <i class="material-icons">arrow_left</i>
         </button>
-        <button class="arrow-button">
+    </form>
+    <form action="{{ url_for('update_offset') }}" method="POST">
+        <input type="hidden" name="city" value="{{ city }}">
+        <input type="hidden" name="action" value="increment">
+        <input type="hidden" name="current_offset" value="{{ session.get('date_offset', 0) }}">
+        <button class="arrow-button" type="submit">
             <i class="material-icons">arrow_right</i>
         </button>
-        </div>
+    </form>
+</div>
 
         {% if is_friday %}
     <table class="shabbat-table">
