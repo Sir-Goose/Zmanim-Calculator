@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Zmanim - Halachic Times</title>
 </head>
 <body>
@@ -14,7 +15,17 @@
         <p2>{{ current_date_english }}</p2>
     </div>
 
-    {% if is_friday %}
+    <div class="table-container">
+        <div class="button-container">
+        <button class="arrow-button">
+            <i class="material-icons">arrow_left</i>
+        </button>
+        <button class="arrow-button">
+            <i class="material-icons">arrow_right</i>
+        </button>
+        </div>
+
+        {% if is_friday %}
     <table class="shabbat-table">
         <tr>
             <th>Shabbat</th>
@@ -85,5 +96,12 @@
             <td>{{ shaah_zmanit }} minutes</td>
         </tr>
     </table>
+
+
+    </div>
+
+
+
+
 </body>
 </html>
