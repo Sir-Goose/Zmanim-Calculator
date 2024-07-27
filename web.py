@@ -55,60 +55,32 @@ def update_offset():
     return redirect(url_for('search', query=city, date_offset=new_offset))
 
 
+def get_times_data(city, date_offset):
+    times_data = {}
+    times_data['dawn'] = Times.dawn(city, date_offset)
+    times_data['earliest_tallit'] = Times.earliest_tallit_tefillin(city, date_offset)
+    times_data['sunrise'] = Times.sunrise(city, date_offset)
+    times_data['latest_shema'] = Times.latest_shema(city, date_offset)
+    times_data['latest_shacharit'] = Times.latest_shacharit(city, date_offset)
+    times_data['midday'] = Times.midday(city, date_offset)
+    times_data['earliest_mincha'] = Times.earliest_mincha(city, date_offset)
+    times_data['mincha_ketana'] = Times.mincha_ketana(city, date_offset)
+    times_data['plag_hamincha'] = Times.plag_hamincha(city, date_offset)
+    times_data['sunset'] = Times.sunset(city, date_offset)
+    times_data['nightfall'] = Times.nightfall(city, date_offset)
+    times_data['midnight'] = Times.midnight(city, date_offset)
+    times_data['shaah_zmanit'] = round(Times.shaah_zmanit(city, date_offset) * 60, 2)
+    times_data['current_date_hebrew'] = Times.get_current_hebrew_date_words(city, date_offset)
+    times_data['current_date_english'] = Times.get_current_english_date_words(city, date_offset)
+    times_data['is_friday'] = Times.is_friday(city, date_offset)
+    times_data['candle_lighting'] = Times.candle_lighting(city, date_offset)
+    return times_data
+
 def index(selected_city="Cape Town", date_offset=0):
-    # selected_city = request.args.get('selectedCity')
-    if selected_city:
-        city = selected_city
-        print("selected City: ", city)
-        # Call the relevant functions based on the selected city
-        dawn = Times.dawn(city, date_offset)
-        earliest_tallit = Times.earliest_tallit_tefillin(city, date_offset)
-        sunrise = Times.sunrise(city, date_offset)
-        latest_shema = Times.latest_shema(city, date_offset)
-        latest_shacharit = Times.latest_shacharit(city, date_offset)
-        midday = Times.midday(city, date_offset)
-        earliest_mincha = Times.earliest_mincha(city, date_offset)
-        mincha_ketana = Times.mincha_ketana(city, date_offset)
-        plag_hamincha = Times.plag_hamincha(city, date_offset)
-        sunset = Times.sunset(city, date_offset)
-        nightfall = Times.nightfall(city, date_offset)
-        midnight = Times.midnight(city, date_offset)
-        shaah_zmanit = round(Times.shaah_zmanit(city, date_offset) * 60, 2)
-        current_date_hebrew = Times.get_current_hebrew_date_words(city, date_offset)
-        current_date_english = Times.get_current_english_date_words(city, date_offset)
-        is_friday = Times.is_friday(city, date_offset)
-        candle_lighting = Times.candle_lighting(city, date_offset)
-    else:
-        # Cape Town is the default city
-        dawn = Times.dawn("Cape Town")
-        earliest_tallit = Times.earliest_tallit_tefillin("Cape Town")
-        sunrise = Times.sunrise("Cape Town")
-        latest_shema = Times.latest_shema("Cape Town")
-        latest_shacharit = Times.latest_shacharit("Cape Town")
-        midday = Times.midday("Cape Town")
-        earliest_mincha = Times.earliest_mincha("Cape Town")
-        mincha_ketana = Times.mincha_ketana("Cape Town")
-        plag_hamincha = Times.plag_hamincha("Cape Town")
-        sunset = Times.sunset("Cape Town")
-        nightfall = Times.nightfall("Cape Town")
-        midnight = Times.midnight("Cape Town")
-        shaah_zmanit = round(Times.shaah_zmanit("Cape Town") * 60, 2)
-        city = "Cape Town"
-        current_date_hebrew = Times.get_current_hebrew_date_words("Cape Town")
-        current_date_english = Times.get_current_english_date_words("Cape Town")
-        is_friday = Times.is_friday("Cape Town")
-        candle_lighting = Times.candle_lighting("Cape Town")
-
+    city = selected_city or "Cape Town"
+    times_data = get_times_data(city, date_offset)
     cities_list = read_cities_from_csv('cities.csv')
-
-    return render_template('times.html', current_date_english=current_date_english,
-                           current_date_hebrew=current_date_hebrew, dawn=dawn, earliest_tallit=earliest_tallit,
-                           sunrise=sunrise, latest_shema=latest_shema, latest_shacharit=latest_shacharit,
-                           midday=midday, earliest_mincha=earliest_mincha, mincha_ketana=mincha_ketana,
-                           plag_hamincha=plag_hamincha, sunset=sunset, nightfall=nightfall, midnight=midnight,
-                           shaah_zmanit=shaah_zmanit, city=city, cities=cities_list, is_friday=is_friday,
-                           candle_lighting=candle_lighting)
-
+    return render_template('times.html', **times_data, city=city, cities=cities_list)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)
