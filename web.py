@@ -34,25 +34,33 @@ def home():
 
 @app.route('/search', methods=['GET'])
 def search():
-    query = request.args.get('query')
-    query = query.replace('+', ' ')
-    date_offset = int(request.args.get('date_offset', 0))
-    session['date_offset'] = date_offset
-    return index(query, date_offset)
+    try:
+        query = request.args.get('query')
+        if query:
+            query = query.replace('+', ' ')
+            date_offset = int(request.args.get('date_offset', 0))
+            session['date_offset'] = date_offset
+            return index(query, date_offset)
+    except:
+        return index()
+    return index()
 
 
 @app.route('/update_offset', methods=['POST'])
 def update_offset():
     city = request.form.get('city')
     action = request.form.get('action')
-    current_offset = int(request.form.get('current_offset'))
+    offset = request.form.get('current_offset')
+    new_offset = 0
+    if offset:
+        current_offset = int(offset)
 
-    if action == 'increment':
-        new_offset = current_offset + 1
-    else:
-        new_offset = current_offset - 1
-
-    return redirect(url_for('search', query=city, date_offset=new_offset))
+        if action == 'increment':
+            new_offset = current_offset + 1
+        else:
+            new_offset = current_offset - 1
+    
+    return redirect(url_for('search', query=city, date_offset=new_offset)) 
 
 
 def get_times_data(city, date_offset):
@@ -75,6 +83,7 @@ def get_times_data(city, date_offset):
     times_data['is_friday'] = Times.is_friday(city, date_offset)
     times_data['candle_lighting'] = Times.candle_lighting(city, date_offset)
     return times_data
+
 
 def index(selected_city="Cape Town", date_offset=0):
     city = selected_city or "Cape Town"
