@@ -4,3 +4,5 @@ static/fonts/tiemposheadline-black-webfont.woff
 /.venv/
 .DS_Store
 /__pycache__
+pyrightconfig.json
+
