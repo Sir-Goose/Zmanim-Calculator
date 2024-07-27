@@ -5,4 +5,4 @@ static/fonts/tiemposheadline-black-webfont.woff
 .DS_Store
 /__pycache__
 pyrightconfig.json
-
+.idea
