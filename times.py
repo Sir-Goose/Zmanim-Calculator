@@ -1,3 +1,5 @@
+from convertdate.gregorian import date
+from pytz.tzinfo import DstTzInfo
 import requests
 import cities
 from astral import LocationInfo
@@ -9,26 +11,47 @@ from convertdate import hebrew
 
 import hebrew_converter
 
-
 class Times:
     cities = cities.Cities()
     cities.cities()
     tf = TimezoneFinder()
+    city: str
+    current_date: date
+    latitude: float
+    longitude: float
+    location: LocationInfo
+    str_timezone: str
+    object_timezone: DstTzInfo
+
+    def __init__(self, city, date_offset):
+        self.city = city
+        self.common_values(city, date_offset)
+
+    def common_values(self, city, offset=0):
+        # this needs a lot of checking
+        self.latitude, self.longitude = self.cities.get_coordinates(city)
+        self.location = LocationInfo(longitude=self.longitude, latitude=self.latitude)
+        self.current_date = datetime.now(timezone('UTC')).date()
+        self.current_date = self.current_date + timedelta(days=offset)
+        time_zone_name = self.tf.timezone_at(lng=self.longitude, lat=self.latitude)
+        if time_zone_name:
+            self.str_timezone = time_zone_name
+        else:
+            self.str_timezone = "UTC"
+        time_zone_obj = timezone(self.str_timezone)
+        self.object_timezone = time_zone_obj
 
     def dawn(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        dawn = sun(location.observer, date=current_date, dawn_dusk_depression=16.9)
+        dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
         dawn_time_utc = dawn['dawn']
-
         try:
-            timezone_str = self.tf.timezone_at(lng=longitude, lat=latitude)
+            timezone_str = self.tf.timezone_at(lng=self.longitude, lat=self.latitude)
             if timezone_str is None:
-                raise ValueError(f"Unable to determine timezone for coordinates: lat={latitude}, lng={longitude}")
+                raise ValueError(f"Unable to determine timezone for coordinates: lat={self.latitude}, lng={self.longitude}")
 
             city_timezone = timezone(timezone_str)
             dawn_time_city = dawn_time_utc.astimezone(city_timezone)
-            dawn_time = dawn_time_city.strftime("%H:$M")
+            dawn_time = dawn_time_city.strftime("%H:%M")
         except (ValueError, AttributeError, TypeError) as e:
             # Log the error
             print(f"Error determining timezone: {str(e)}")
@@ -36,35 +59,26 @@ class Times:
         return dawn_time
 
     def earliest_tallit_tefillin(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        tallit_tefillin = sun(location.observer, date=current_date, dawn_dusk_depression=10.2)
+        tallit_tefillin = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=10.2)
         tallit_tefillin_utc = tallit_tefillin['dawn']
 
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        adjust_tallit_tefillin = tallit_tefillin_utc.astimezone(location_timezone)
+        adjust_tallit_tefillin = tallit_tefillin_utc.astimezone(self.object_timezone)
 
         tallit_tefillin_time = adjust_tallit_tefillin.strftime("%H:%M")
         return tallit_tefillin_time
 
     def sunrise(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        sun_times = sun(location.observer, date=current_date)
+        sun_times = sun(self.location.observer, date=self.current_date)
         sunrise_utc = sun_times['sunrise']
 
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        adjusted_sunrise = sunrise_utc.astimezone(location_timezone)
+        adjusted_sunrise = sunrise_utc.astimezone(self.object_timezone)
 
         sunrise_time = adjusted_sunrise.strftime("%H:%M")
         return sunrise_time
 
     def latest_shema(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        hanetz_amiti = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dawn']
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        hanetz_amiti = hanetz_amiti.astimezone(location_timezone)
+        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
+        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
         hanetz_amiti = hanetz_amiti.strftime("%H:%M")
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
@@ -77,11 +91,8 @@ class Times:
         return latest_shema
 
     def latest_shacharit(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        hanetz_amiti = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dawn']
-        hanetz_amiti = hanetz_amiti.astimezone(location_timezone)
+        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
+        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
         hanetz_amiti = hanetz_amiti.strftime("%H:%M")
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
@@ -93,55 +104,41 @@ class Times:
         return latest_shacharit
 
     def hanetz_amiti(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        dawn = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)
+        dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
 
         dawn_time_utc = dawn['dawn']
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        adjusted_time = timezone(location_timezone)
+        adjusted_time = timezone(self.str_timezone)
         adjusted_dawn_time = dawn_time_utc.astimezone(adjusted_time)
 
         hanetz_amiti_time = adjusted_dawn_time.strftime("%H:%M")
         return hanetz_amiti_time
 
     def shkiah_amitis(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        dusk = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)
+        dusk = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
 
         dusk_time_utc = dusk['dusk']
 
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        adjusted_time = timezone(location_timezone)
-        dawn_time_utc_plus_2 = dusk_time_utc.astimezone(adjusted_time)
+        dawn_time_utc_plus_2 = dusk_time_utc.astimezone(self.object_timezone)
 
         shkiah_amitis_time = dawn_time_utc_plus_2.strftime("%H:%M")
         return shkiah_amitis_time
 
     def midday(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        start_time = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dawn']
-        end_time = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dusk']
+        start_time = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
+        end_time = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
 
         time_diff = end_time - start_time
 
         midpoint_time_utc = start_time + time_diff / 2
 
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        adjusted_time = timezone(location_timezone)
-        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(adjusted_time)
+        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
 
         midday_time = midpoint_time_utc_plus_2.strftime("%H:%M")
         return midday_time
 
     def earliest_mincha(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        hanetz_amiti = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dawn']
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        hanetz_amiti = hanetz_amiti.astimezone(location_timezone)
+        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
+        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
         hanetz_amiti = hanetz_amiti.strftime("%H:%M")
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
@@ -155,11 +152,8 @@ class Times:
         return earliest_mincha
 
     def mincha_ketana(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        shkiah_amitis = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dusk']
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        shkiah_amitis = shkiah_amitis.astimezone(location_timezone)
+        shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
+        shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
         shkiah_amitis = shkiah_amitis.strftime("%H:%M")
 
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
@@ -173,11 +167,8 @@ class Times:
         return mincha_ketana_time
 
     def plag_hamincha(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        shkiah_amitis = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dusk']
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        shkiah_amitis = shkiah_amitis.astimezone(location_timezone)
+        shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
+        shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
         shkiah_amitis = shkiah_amitis.strftime("%H:%M")
 
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
@@ -191,54 +182,35 @@ class Times:
         return plag_hamincha_time
 
     def sunset(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        sun_times = sun(location.observer, date=current_date)
+        sun_times = sun(self.location.observer, date=self.current_date)
 
         sunset_utc = sun_times['sunset']
 
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        adjusted_time = timezone(location_timezone)
-        sunset_utc_plus_2 = sunset_utc.astimezone(adjusted_time)
+        sunset_utc_plus_2 = sunset_utc.astimezone(self.object_timezone)
 
         sunset_time = sunset_utc_plus_2.strftime("%H:%M")
         return sunset_time
 
     def nightfall(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        nightfall = sun(location.observer, date=current_date, dawn_dusk_depression=6)
+        nightfall = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=6)
 
         nightfall_time_utc = nightfall['dusk']
 
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        utc_plus_2 = timezone(location_timezone)
-        nightfall_time_utc_plus_2 = nightfall_time_utc.astimezone(utc_plus_2)
+        nightfall_time_utc_plus_2 = nightfall_time_utc.astimezone(self.object_timezone)
 
         nightfall_time = nightfall_time_utc_plus_2.strftime("%H:%M")
         return nightfall_time
 
-    def common_values(self, city, offset=0):
-        latitude, longitude = self.cities.get_coordinates(city)
-        location = LocationInfo(longitude=longitude, latitude=latitude)
-        current_date = datetime.now(timezone('UTC')).date()
-        current_date = current_date + timedelta(days=offset)
-        return current_date, latitude, location, longitude
-
     def midnight(self, city, offset=0):
-        current_date, latitude, location, longitude = self.common_values(city, offset)
-
-        tomorrow_date = current_date + timedelta(days=1)
-        start_time = sun(location.observer, date=current_date, dawn_dusk_depression=1.583)['dusk']
-        end_time = sun(location.observer, date=tomorrow_date, dawn_dusk_depression=1.583)['dawn']
+        tomorrow_date = self.current_date + timedelta(days=1)
+        start_time = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
+        end_time = sun(self.location.observer, date=tomorrow_date, dawn_dusk_depression=1.583)['dawn']
 
         time_diff = end_time - start_time
 
         midpoint_time_utc = start_time + time_diff / 2
 
-        location_timezone = self.tf.timezone_at(lng=longitude, lat=latitude)
-        adjusted_time = timezone(location_timezone)
-        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(adjusted_time)
+        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
 
         midnight_time = midpoint_time_utc_plus_2.strftime("%H:%M")
         return midnight_time
@@ -264,8 +236,7 @@ class Times:
 
     def get_current_hebrew_date(self, city, offset=0):
         latitude, longitude = self.cities.get_coordinates(city)
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        current_date = datetime.now(location_timezone).date()
+        current_date = datetime.now(self.object_timezone).date()
         current_date = current_date + timedelta(days=offset)
 
         hebrew_date = hebrew.from_gregorian(current_date.year, current_date.month, current_date.day)
@@ -283,8 +254,7 @@ class Times:
 
     def get_hebrew_date_30_days_ago(self, city):
         latitude, longitude = self.cities.get_coordinates(city)
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        current_date = datetime.now(location_timezone).date()
+        current_date = datetime.now(self.object_timezone).date()
         thirty_days_ago = current_date - timedelta(days=30)
         hebrew_date = hebrew.from_gregorian(thirty_days_ago.year, thirty_days_ago.month, thirty_days_ago.day)
         hebrew_date = str(hebrew_date)
@@ -293,8 +263,7 @@ class Times:
 
     def get_current_english_date(self, city, offset=0):
         latitude, longitude = self.cities.get_coordinates(city)
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        english_date = datetime.now(location_timezone).date()
+        english_date = datetime.now(self.object_timezone).date()
         english_date = english_date + timedelta(days=offset)
         english_date = str(english_date)
         english_date = english_date.replace('-', ' ')
@@ -302,8 +271,7 @@ class Times:
 
     def get_current_english_date_words(self, city, offset=0):
         latitude, longitude = self.cities.get_coordinates(city)
-        location_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        english_date = datetime.now(location_timezone).date()
+        english_date = datetime.now(self.object_timezone).date()
         english_date = english_date + timedelta(days=offset)
 
         english_date = english_date.strftime("%d %B %Y")
