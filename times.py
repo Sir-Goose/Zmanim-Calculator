@@ -21,10 +21,18 @@ class Times:
         dawn = sun(location.observer, date=current_date, dawn_dusk_depression=16.9)
         dawn_time_utc = dawn['dawn']
 
-        city_timezone = timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
-        dawn_time_city = dawn_time_utc.astimezone(city_timezone)
+        try:
+            timezone_str = self.tf.timezone_at(lng=longitude, lat=latitude)
+            if timezone_str is None:
+                raise ValueError(f"Unable to determine timezone for coordinates: lat={latitude}, lng={longitude}")
 
-        dawn_time = dawn_time_city.strftime("%H:%M")
+            city_timezone = timezone(timezone_str)
+            dawn_time_city = dawn_time_utc.astimezone(city_timezone)
+            dawn_time = dawn_time_city.strftime("%H:$M")
+        except (ValueError, AttributeError, TypeError) as e:
+            # Log the error
+            print(f"Error determining timezone: {str(e)}")
+            dawn_time = "ERROR"
         return dawn_time
 
     def earliest_tallit_tefillin(self, city, offset=0):
