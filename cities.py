@@ -19,10 +19,22 @@ class Cities:
             print("City data loaded.")
 
     def get_coordinates(self, city):
-        return self.data[city][0], self.data[city][1]
+        latitude: float = self.data[city][0]
+        longitude: float = self.data[city][1]
+        assert latitude, longitude <= 180
+        return latitude, longitude
 
-    def get_city_timezone(self, latitude, longitude):
-        return timezone(self.tf.timezone_at(lng=longitude, lat=latitude))
+    def get_city_timezone(self, latitude: float, longitude: float):
+        assert latitude, longitude <= 180
+        try:
+            str_time: str | None = self.tf.timezone_at(lng=longitude, lat=latitude)
+            if str_time is None:
+                raise ValueError(
+                    f"Unable to determine timezone for coordinates: lat={latitude}, lng={longitude}")
+            date_time_time = timezone(str_time)
+        except:
+            date_time_time = timezone("UTC")
+        return date_time_time
 
 
 class CapeTown:
