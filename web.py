@@ -63,26 +63,26 @@ def update_offset():
     return redirect(url_for('search', query=city, date_offset=new_offset))
 
 
-def get_times_data(city, date_offset):
+def get_times_data(city: str, date_offset: int):
     CityTimes = times.Times(city, date_offset)
     times_data = {}
-    times_data['dawn'] = CityTimes.dawn(city, date_offset)
-    times_data['earliest_tallit'] = CityTimes.earliest_tallit_tefillin(city, date_offset)
-    times_data['sunrise'] = CityTimes.sunrise(city, date_offset)
-    times_data['latest_shema'] = CityTimes.latest_shema(city, date_offset)
-    times_data['latest_shacharit'] = CityTimes.latest_shacharit(city, date_offset)
-    times_data['midday'] = CityTimes.midday(city, date_offset)
-    times_data['earliest_mincha'] = CityTimes.earliest_mincha(city, date_offset)
-    times_data['mincha_ketana'] = CityTimes.mincha_ketana(city, date_offset)
-    times_data['plag_hamincha'] = CityTimes.plag_hamincha(city, date_offset)
-    times_data['sunset'] = CityTimes.sunset(city, date_offset)
-    times_data['nightfall'] = CityTimes.nightfall(city, date_offset)
-    times_data['midnight'] = CityTimes.midnight(city, date_offset)
-    times_data['shaah_zmanit'] = round(CityTimes.shaah_zmanit(city, date_offset) * 60, 2)
-    times_data['current_date_hebrew'] = CityTimes.get_current_hebrew_date_words(city, date_offset)
-    times_data['current_date_english'] = CityTimes.get_current_english_date_words(city, date_offset)
-    times_data['is_friday'] = CityTimes.is_friday(city, date_offset)
-    times_data['candle_lighting'] = CityTimes.candle_lighting(city, date_offset)
+    times_data['dawn'] = CityTimes.dawn()
+    times_data['earliest_tallit'] = CityTimes.earliest_tallit_tefillin()
+    times_data['sunrise'] = CityTimes.sunrise()
+    times_data['latest_shema'] = CityTimes.latest_shema()
+    times_data['latest_shacharit'] = CityTimes.latest_shacharit()
+    times_data['midday'] = CityTimes.midday()
+    times_data['earliest_mincha'] = CityTimes.earliest_mincha()
+    times_data['mincha_ketana'] = CityTimes.mincha_ketana()
+    times_data['plag_hamincha'] = CityTimes.plag_hamincha()
+    times_data['sunset'] = CityTimes.sunset()
+    times_data['nightfall'] = CityTimes.nightfall()
+    times_data['midnight'] = CityTimes.midnight()
+    times_data['shaah_zmanit'] = round(CityTimes.shaah_zmanit() * 60, 2)
+    times_data['current_date_hebrew'] = CityTimes.get_current_hebrew_date_words()
+    times_data['current_date_english'] = CityTimes.get_current_english_date_words()
+    times_data['is_friday'] = CityTimes.is_friday()
+    times_data['candle_lighting'] = CityTimes.candle_lighting()
     return times_data
 
 
