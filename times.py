@@ -1,5 +1,6 @@
 from convertdate.gregorian import date
-from pytz.tzinfo import DstTzInfo
+from pytz.tzinfo import DstTzInfo, StaticTzInfo
+from pytz import _UTCclass
 import requests
 import cities
 from astral import LocationInfo
@@ -21,7 +22,7 @@ class Times:
     longitude: float
     location: LocationInfo
     str_timezone: str
-    object_timezone: DstTzInfo
+    object_timezone: StaticTzInfo | DstTzInfo | _UTCclass
 
     def __init__(self, city, date_offset):
         self.city = city
@@ -38,8 +39,7 @@ class Times:
             self.str_timezone = time_zone_name
         else:
             self.str_timezone = "UTC"
-        time_zone_obj = timezone(self.str_timezone)
-        self.object_timezone = time_zone_obj
+        self.object_timezone = timezone(self.str_timezone)
 
     def dawn(self, city, offset=0):
         dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
