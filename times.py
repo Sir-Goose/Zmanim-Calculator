@@ -1,8 +1,8 @@
 from convertdate.gregorian import date
 from pytz.tzinfo import DstTzInfo, StaticTzInfo
-from pytz import _UTCclass
 import requests
 import cities
+from typing import Any
 from astral import LocationInfo
 from astral.sun import sun
 from datetime import datetime, timedelta
@@ -23,7 +23,7 @@ class Times:
     longitude: float
     location: LocationInfo
     str_timezone: str
-    object_timezone: StaticTzInfo | DstTzInfo | _UTCclass
+    object_timezone: StaticTzInfo | DstTzInfo | Any
 
     def __init__(self, city, date_offset):
         self.city = city
@@ -46,18 +46,8 @@ class Times:
     def dawn(self):
         dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
         dawn_time_utc = dawn['dawn']
-        try:
-            timezone_str = self.tf.timezone_at(lng=self.longitude, lat=self.latitude)
-            if timezone_str is None:
-                raise ValueError(f"Unable to determine timezone for coordinates: lat={self.latitude}, lng={self.longitude}")
-
-            city_timezone = timezone(timezone_str)
-            dawn_time_city = dawn_time_utc.astimezone(city_timezone)
-            dawn_time = dawn_time_city.strftime("%H:%M")
-        except (ValueError, AttributeError, TypeError) as e:
-            # Log the error
-            print(f"Error determining timezone: {str(e)}")
-            dawn_time = "ERROR"
+        dawn_time_city = dawn_time_utc.astimezone(self.object_timezone)
+        dawn_time = dawn_time_city.strftime("%H:%M")
         return dawn_time
 
     def earliest_tallit_tefillin(self):
