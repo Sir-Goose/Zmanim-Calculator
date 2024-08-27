@@ -25,16 +25,19 @@ class Times:
     str_timezone: str
     object_timezone: StaticTzInfo | DstTzInfo | Any
 
-    def __init__(self, city, date_offset):
+    def __init__(self, city: str, date_offset: int, current_date: date | None=None):
         self.city = city
         self.offset = date_offset
-        self.common_values(city, date_offset)
+        self.common_values(city, date_offset, current_date)
 
-    def common_values(self, city, offset=0):
+    def common_values(self, city, offset=0, current_date=None):
         # this needs a lot of checking
         self.latitude, self.longitude = self.cities.get_coordinates(city)
         self.location = LocationInfo(longitude=self.longitude, latitude=self.latitude)
-        self.current_date = datetime.now(timezone('UTC')).date()
+        if current_date is None:
+            self.current_date = datetime.now(timezone('UTC')).date()
+        else:
+            self.current_date = current_date
         self.current_date = self.current_date + timedelta(days=offset)
         time_zone_name = self.tf.timezone_at(lng=self.longitude, lat=self.latitude)
         if time_zone_name:
