@@ -251,19 +251,12 @@ class Times:
         return hebrew_date
 
     def get_current_english_date(self):
-        latitude, longitude = self.cities.get_coordinates(self.city)
-        english_date = datetime.now(self.object_timezone).date()
-        english_date = english_date + timedelta(days=self.offset)
-        english_date = str(english_date)
+        english_date = str(self.current_date)
         english_date = english_date.replace('-', ' ')
         return english_date
 
     def get_current_english_date_words(self):
-        latitude, longitude = self.cities.get_coordinates(self.city)
-        english_date = datetime.now(self.object_timezone).date()
-        english_date = english_date + timedelta(days=self.offset)
-
-        english_date = english_date.strftime("%d %B %Y")
+        english_date = self.current_date.strftime("%d %B %Y")
         return english_date
 
     def is_friday(self):
