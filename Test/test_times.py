@@ -32,7 +32,7 @@ class TestTimes(unittest.TestCase):
     def test_midnight(self):
         self.assertEqual(self.CityTimes.midnight(), "00:48")
     def test_shaah_zmanit(self):
-        self.assertEqual(round(self.CityTimes.shaah_zmanit() * 60, 2), "56.42")
+        self.assertEqual(round(self.CityTimes.shaah_zmanit() * 60, 2), 56.42)
     def test_get_current_hebrew_date(self):
         ...
     def test_get_current_hebrew_date_words(self):
@@ -44,9 +44,9 @@ class TestTimes(unittest.TestCase):
     def test_get_current_english_date_words(self):
         ...
     def test_is_friday(self):
-        ...
+        self.assertEqual(self.CityTimes.is_friday(), True)
     def test_candle_lighting(self):
-        ...
+        self.assertEqual(self.CityTimes.candle_lighting(), "18:04")
 
 
 

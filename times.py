@@ -273,11 +273,7 @@ class Times:
         return english_date
 
     def is_friday(self):
-        latitude, longitude = self.cities.get_coordinates(self.city)
-        location = LocationInfo(longitude=longitude, latitude=latitude)
-        current_date = datetime.now(timezone('UTC')).date()
-        current_date = current_date + timedelta(days=self.offset)
-        day = sun(location.observer, date=current_date)['sunrise']
+        day = sun(self.location.observer, date=self.current_date)['sunrise']
         day = day.strftime("%A")
         if day == "Friday":
             return True
