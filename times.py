@@ -230,11 +230,7 @@ class Times:
         return result
 
     def get_current_hebrew_date(self):
-        latitude, longitude = self.cities.get_coordinates(self.city)
-        current_date = datetime.now(self.object_timezone).date()
-        current_date = current_date + timedelta(days=self.offset)
-
-        hebrew_date = hebrew.from_gregorian(current_date.year, current_date.month, current_date.day)
+        hebrew_date = hebrew.from_gregorian(self.current_date.year, self.current_date.month, self.current_date.day)
         hebrew_date = str(hebrew_date)
         hebrew_date = hebrew_date.replace('(', ' ').replace(')', ' ').replace(',', '')
         return hebrew_date
@@ -248,9 +244,7 @@ class Times:
         return word_date
 
     def get_hebrew_date_30_days_ago(self):
-        latitude, longitude = self.cities.get_coordinates(self.city)
-        current_date = datetime.now(self.object_timezone).date()
-        thirty_days_ago = current_date - timedelta(days=30)
+        thirty_days_ago = self.current_date - timedelta(days=30)
         hebrew_date = hebrew.from_gregorian(thirty_days_ago.year, thirty_days_ago.month, thirty_days_ago.day)
         hebrew_date = str(hebrew_date)
         hebrew_date = hebrew_date.replace('(', ' ').replace(')', ' ').replace(',', '')
