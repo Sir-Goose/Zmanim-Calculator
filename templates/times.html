@@ -1,117 +1,130 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <title>Zmanim - Halachic Times</title>
-</head>
-<body>
-    <h1><a href="{{ url_for('home') }}">Zmanim - Halachic Times</a></h1>
-    <h3>City: {{ city }}</h3>
-    <div class="dates">
-        <p2>{{ current_date_hebrew }}</p2>
-    </div>
-    <div class="dates1">
-        <p2>{{ current_date_english }}</p2>
-    </div>
+    <head>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static', filename='favicon.ico') }}"
+            type="image/x-icon"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <title>Zmanim - Halachic Times</title>
+    </head>
+    <body>
+        <h1><a href="{{ url_for('home') }}">Zmanim - Halachic Times</a></h1>
+        <h3>City: {{ city }}</h3>
+        <div class="dates">
+            <p2>{{ current_date_hebrew }}</p2>
+        </div>
+        <div class="dates1">
+            <p2>{{ current_date_english }}</p2>
+        </div>
 
-    <div class="table-container">
-        <div class="button-container">
-    <form action="{{ url_for('update_offset') }}" method="POST">
-        <input type="hidden" name="city" value="{{ city }}">
-        <input type="hidden" name="action" value="decrement">
-        <input type="hidden" name="current_offset" value="{{ session.get('date_offset', 0) }}">
-        <button class="arrow-button" type="submit">
-            <i class="material-icons">arrow_left</i>
-        </button>
-    </form>
-    <form action="{{ url_for('update_offset') }}" method="POST">
-        <input type="hidden" name="city" value="{{ city }}">
-        <input type="hidden" name="action" value="increment">
-        <input type="hidden" name="current_offset" value="{{ session.get('date_offset', 0) }}">
-        <button class="arrow-button" type="submit">
-            <i class="material-icons">arrow_right</i>
-        </button>
-    </form>
-</div>
+        <div class="table-container">
+            <div class="button-container">
+                <form action="{{ url_for('update_offset') }}" method="POST">
+                    <input type="hidden" name="city" value="{{ city }}" />
+                    <input type="hidden" name="action" value="decrement" />
+                    <input
+                        type="hidden"
+                        name="current_offset"
+                        value="{{ session.get('date_offset', 0) }}"
+                    />
+                    <button class="arrow-button" type="submit">
+                        <i class="material-icons">arrow_left</i>
+                    </button>
+                </form>
+                <form action="{{ url_for('update_offset') }}" method="POST">
+                    <input type="hidden" name="city" value="{{ city }}" />
+                    <input type="hidden" name="action" value="increment" />
+                    <input
+                        type="hidden"
+                        name="current_offset"
+                        value="{{ session.get('date_offset', 0) }}"
+                    />
+                    <button class="arrow-button" type="submit">
+                        <i class="material-icons">arrow_right</i>
+                    </button>
+                </form>
+            </div>
 
-        {% if is_friday %}
-    <table class="shabbat-table">
-        <tr>
-            <th>Shabbat</th>
-            <th>Time</th>
-        </tr>
-        <tr>
-            <td>Candle Lighting</td>
-            <td>{{ candle_lighting }}</td>
-        </tr>
-    </table>
-{% endif %}
+            {% if is_friday %}
+            <table class="shabbat-table">
+                <tr>
+                    <th>Shabbat</th>
+                    <th>Time</th>
+                </tr>
+                <tr>
+                    <td>Candle Lighting</td>
+                    <td>{{ candle_lighting }}</td>
+                </tr>
+            </table>
+            {% endif %}
 
-    <table>
-        <tr>
-            <th>Zmanim</th>
-            <th>Time</th>
-        </tr>
-        <tr>
-            <td>Dawn (Alot Hashachar)</td>
-            <td>{{ dawn }}</td>
-        </tr>
-        <tr>
-            <td>Earliest Tallit and Tefillin (Misheyakir)</td>
-            <td>{{ earliest_tallit }}</td>
-        </tr>
-        <tr>
-            <td>Sunrise (Hanetz Hachamah)</td>
-            <td>{{ sunrise }}</td>
-        </tr>
-        <tr>
-            <td>Latest Shema</td>
-            <td>{{ latest_shema }}</td>
-        </tr>
-        <tr>
-            <td>Latest Shacharit</td>
-            <td>{{ latest_shacharit }}</td>
-        </tr>
-        <tr>
-            <td>Midday (Chatzot Hayom)</td>
-            <td>{{ midday }}</td>
-        </tr>
-        <tr>
-            <td>Earliest Mincha (Mincha Gedolah)</td>
-            <td>{{ earliest_mincha }}</td>
-        </tr>
-        <tr>
-            <td>Mincha Ketanah ("Small Mincha")</td>
-            <td>{{ mincha_ketana }}</td>
-        </tr>
-        <tr>
-            <td>Plag Hamincha ("Half of Mincha")</td>
-            <td>{{ plag_hamincha }}</td>
-        </tr>
-        <tr>
-            <td>Sunset (Shkiah)</td>
-            <td>{{ sunset }}</td>
-        </tr>
-        <tr>
-            <td>Nightfall (Tzeit Hakochavim)</td>
-            <td>{{ nightfall }}</td>
-        </tr>
-        <tr>
-            <td>Midnight (Chatzot HaLailah</td>
-            <td>{{ midnight }}</td>
-        </tr>
-        <tr>
-            <td>Shaah Zmanit (proportional hour)</td>
-            <td>{{ shaah_zmanit }} minutes</td>
-        </tr>
-    </table>
-
-
-    </div>
-
-
-
-
-</body>
+            <table>
+                <tr>
+                    <th>Zmanim</th>
+                    <th>Time</th>
+                </tr>
+                <tr>
+                    <td>Dawn (Alot Hashachar)</td>
+                    <td>{{ dawn }}</td>
+                </tr>
+                <tr>
+                    <td>Earliest Tallit and Tefillin (Misheyakir)</td>
+                    <td>{{ earliest_tallit }}</td>
+                </tr>
+                <tr>
+                    <td>Sunrise (Hanetz Hachamah)</td>
+                    <td>{{ sunrise }}</td>
+                </tr>
+                <tr>
+                    <td>Latest Shema</td>
+                    <td>{{ latest_shema }}</td>
+                </tr>
+                <tr>
+                    <td>Latest Shacharit</td>
+                    <td>{{ latest_shacharit }}</td>
+                </tr>
+                <tr>
+                    <td>Midday (Chatzot Hayom)</td>
+                    <td>{{ midday }}</td>
+                </tr>
+                <tr>
+                    <td>Earliest Mincha (Mincha Gedolah)</td>
+                    <td>{{ earliest_mincha }}</td>
+                </tr>
+                <tr>
+                    <td>Mincha Ketanah ("Small Mincha")</td>
+                    <td>{{ mincha_ketana }}</td>
+                </tr>
+                <tr>
+                    <td>Plag Hamincha ("Half of Mincha")</td>
+                    <td>{{ plag_hamincha }}</td>
+                </tr>
+                <tr>
+                    <td>Sunset (Shkiah)</td>
+                    <td>{{ sunset }}</td>
+                </tr>
+                <tr>
+                    <td>Nightfall (Tzeit Hakochavim)</td>
+                    <td>{{ nightfall }}</td>
+                </tr>
+                <tr>
+                    <td>Midnight (Chatzot HaLailah</td>
+                    <td>{{ midnight }}</td>
+                </tr>
+                <tr>
+                    <td>Shaah Zmanit (proportional hour)</td>
+                    <td>{{ shaah_zmanit }} minutes</td>
+                </tr>
+            </table>
+        </div>
+    </body>
 </html>
