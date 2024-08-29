@@ -25,20 +25,25 @@ header {
 }
 
 @font-face {
-    font-family: 'CustomFont';
-    src: url("fonts/tiemposheadline-regular-webfont.woff2") format("woff2"),
+    font-family: "CustomFont";
+    src:
+        url("fonts/tiemposheadline-regular-webfont.woff2") format("woff2"),
         url("fonts/tiemposheadline-regular-webfont.woff") format("woff");
     font-weight: normal;
     font-style: normal;
 }
 
 .logo h1 {
-    font-family: CustomFont, monospace, system-ui-serif, serif;
+    font-family: monospace, system-ui-serif, serif;
     font-size: 2.5rem;
     font-weight: 400;
     color: #202124;
     margin-top: 10px;
-    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    font-feature-settings:
+        "pnum" on,
+        "lnum" on,
+        "ss01" on,
+        "case" on;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
 }
@@ -68,7 +73,7 @@ main {
     background-color: #f8f8f7;
     color: #202124;
     padding: 15px 20px 15px 40px;
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
 }
 
 .search-container button[type="submit"] {
@@ -82,25 +87,30 @@ main {
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
 }
 
 .search-container button[type="submit"]:hover {
     background-color: #ce673d;
 }
 @font-face {
-    font-family: 'Material Icons';
+    font-family: "Material Icons";
     font-style: normal;
     font-weight: 400;
-    src: url(https://fonts.gstatic.com/s/materialicons/v70/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/materialicons/v70/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+        format("woff2");
 }
 
 .footer-link {
     display: inline-block;
     color: #202124;
     text-decoration: none;
-    font-family: "system-ui", serif;
-    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    font-family: monospace, sans-serif;
+    font-feature-settings:
+        "pnum" on,
+        "lnum" on,
+        "ss01" on,
+        "case" on;
     -webkit-font-smoothing: antialiased;
     font-weight: 500;
     text-rendering: optimizeLegibility;
@@ -111,22 +121,25 @@ main {
     color: #45494d;
 }
 
-
 footer {
     background-color: #f5f5ef;
     text-align: center;
-    font-family: "system-ui-serif", "serif";
+    font-family: sans-serif;
 }
 
 /* Styles for times.html */
 h1 {
-    font-family: CustomFont, monospace, system-ui-serif, serif;
+    font-family: monospace, system-ui-serif, serif;
     font-size: 2.5rem;
     font-weight: 400;
     color: #202124;
     text-align: center;
     margin-top: 20px;
-    font-feature-settings: "pnum" on, "lnum" on, "ss01" on, "case" on;
+    font-feature-settings:
+        "pnum" on,
+        "lnum" on,
+        "ss01" on,
+        "case" on;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
 }
@@ -137,7 +150,7 @@ h1 a {
 }
 
 h3 {
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
     font-size: 1.5rem;
     font-weight: 500;
     color: #202124;
@@ -146,7 +159,7 @@ h3 {
 }
 
 p {
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
     font-size: 1.2rem;
     color: #202124;
     text-align: center;
@@ -154,12 +167,11 @@ p {
 }
 
 p2 {
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
     font-size: 1.2rem;
     color: #202124;
     text-align: center;
 }
-
 
 .dates {
     margin-top: 10px;
@@ -175,7 +187,7 @@ table {
     max-width: 800px;
     margin: 20px auto;
     border-collapse: collapse;
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
     font-size: 1.1rem;
     color: #202124;
     border: 1px solid #d8d8d2;
@@ -192,9 +204,9 @@ table {
 .shabbat-table {
     width: 100%;
     max-width: 800px;
-    margin:20px auto;
+    margin: 20px auto;
     border-collapse: collapse;
-    font-family: "system-ui", "ui-sans-serif";
+    font-family: sans-serif;
     font-size: 1.1rem;
     color: #202124;
     border: 1px solid #d8d8d2;
@@ -202,7 +214,8 @@ table {
     overflow: hidden;
 }
 
-th, td {
+th,
+td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid #d8d8d2;
@@ -247,7 +260,6 @@ tr:last-child td {
     vertical-align: middle;
 }
 
-
 /* Media Queries */
 @media screen and (max-width: 30em) {
     h1 {
@@ -266,11 +278,11 @@ tr:last-child td {
         font-size: 0.9rem;
     }
 
-    th, td {
+    th,
+    td {
         padding: 10px;
     }
 }
-
 
 /* Media Queries */
 @media screen and (max-width: 30em) {
