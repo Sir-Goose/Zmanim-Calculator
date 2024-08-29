@@ -99,24 +99,21 @@ class Times:
         return latest_shacharit
 
     def hanetz_amiti(self):
-        dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
+        true_sunrise = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
 
-        dawn_time_utc = dawn['dawn']
-        adjusted_time = timezone(self.str_timezone)
-        adjusted_dawn_time = dawn_time_utc.astimezone(adjusted_time)
+        true_sunrise_utc = true_sunrise['dawn']
+        true_sunrise = true_sunrise_utc.astimezone(self.object_timezone)
 
-        hanetz_amiti_time = adjusted_dawn_time.strftime("%H:%M")
-        return hanetz_amiti_time
+        return true_sunrise
 
     def shkiah_amitis(self):
-        dusk = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
+        true_sunset = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
 
-        dusk_time_utc = dusk['dusk']
+        true_sunset = true_sunset['dusk']
 
-        dawn_time_utc_plus_2 = dusk_time_utc.astimezone(self.object_timezone)
+        true_sunset = true_sunset.astimezone(self.object_timezone)
 
-        shkiah_amitis_time = dawn_time_utc_plus_2.strftime("%H:%M")
-        return shkiah_amitis_time
+        return true_sunset
 
     def midday(self):
         start_time = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
@@ -211,22 +208,13 @@ class Times:
         return midnight_time
 
     def shaah_zmanit(self):
-
         time1 = self.hanetz_amiti()
         time2 = self.shkiah_amitis()
 
-        time1_obj = datetime.strptime(time1, "%H:%M")
-        time2_obj = datetime.strptime(time2, "%H:%M")
+        time_diff = time2 - time1
+        prop_hour = time_diff.seconds / 3600 / 12
 
-        time_diff = time2_obj - time1_obj
-
-        total_seconds = time_diff.total_seconds()
-
-        hours = total_seconds / 3600
-
-        result = hours / 12
-        result = round(result, 4)
-
+        result = round(prop_hour, 4)
         return result
 
     def get_current_hebrew_date(self):
