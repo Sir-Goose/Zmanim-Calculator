@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from datetime import datetime, date
+from fuzzywuzzy import process
 import csv
 import times
 import cities
@@ -25,12 +26,11 @@ def strip_cords(cities_list):
         out_list.append(city[0])
     return out_list
 
+cities_list = strip_cords(read_cities_from_csv('cities.csv'))
 
 @app.route('/', methods=['GET'])
 def home():
-    cities_list = read_cities_from_csv('cities.csv')
-    cities_list = strip_cords(cities_list)
-    return render_template('home.html', cities=cities_list)
+    return render_template('home.html')
 
 
 @app.route('/search', methods=['GET'])
@@ -41,9 +41,16 @@ def search():
             query = query.replace('+', ' ')
             date_offset = int(request.args.get('date_offset', 0))
             session['date_offset'] = date_offset
-            return index(query, date_offset)
-    except:
-        return index()
+
+            # Fuzzy search
+            best_match = process.extractOne(query, cities_list)
+            if best_match:
+                matched_city = best_match[0]
+                return index(matched_city, date_offset)
+            else:
+                return render_template('home.html', error="City not found. Please try again.")
+    except Exception as e:
+        return render_template('home.html', error=f"An error occurred: {str(e)}")
     return index()
 
 
