@@ -43,6 +43,18 @@
                 </form>
                 <form action="{{ url_for('update_offset') }}" method="POST">
                     <input type="hidden" name="city" value="{{ city }}" />
+                    <input type="hidden" name="action" value="reset" />
+                    <input
+                        type="hidden"
+                        name="current_offset"
+                        value="{{ session.get('date_offset', 0) }}"
+                    />
+                    <button class="arrow-button" type="submit">
+                        <i class="material-icons">restart_alt</i>
+                    </button>
+                </form>
+                <form action="{{ url_for('update_offset') }}" method="POST">
+                    <input type="hidden" name="city" value="{{ city }}" />
                     <input type="hidden" name="action" value="increment" />
                     <input
                         type="hidden"

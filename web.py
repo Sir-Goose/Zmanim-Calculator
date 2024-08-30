@@ -58,6 +58,8 @@ def update_offset():
 
         if action == 'increment':
             new_offset = current_offset + 1
+        elif action == "reset":
+            new_offset = 0
         else:
             new_offset = current_offset - 1
 
