@@ -4,3 +4,5 @@ pytz
 timezonefinder
 astral
 convertdate
+fuzzywuzzy[speedup]
+python-Levenshtein
