@@ -30,43 +30,16 @@
                         type="text"
                         name="query"
                         id="query"
-                        placeholder="Search for a city..."
-                        list="cities"
+                        placeholder="Enter your city..."
                     />
-                    <datalist id="cities">
-                        {% for city in cities %}
-                        <option value="{{ city }}">{% endfor %}</option>
-                    </datalist>
                     <button type="submit">Search</button>
                 </form>
             </div>
         </main>
-
         <footer>
             <a class="footer-link" href="https://github.com/Sir-Goose">
                 <p>Matthew Allison GitHub</p>
             </a>
         </footer>
-
-        <script>
-            document
-                .getElementById("search-form")
-                .addEventListener("submit", function (event) {
-                    var input = document.getElementById("query");
-                    var datalist = document.getElementById("cities");
-                    var options = datalist.options;
-
-                    for (var i = 0; i < options.length; i++) {
-                        if (
-                            options[i].value
-                                .toLowerCase()
-                                .startsWith(input.value.toLowerCase())
-                        ) {
-                            input.value = options[i].value;
-                            break;
-                        }
-                    }
-                });
-        </script>
     </body>
 </html>
