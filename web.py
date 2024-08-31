@@ -5,6 +5,7 @@ import csv
 import times
 import cities
 import os
+import sys
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24).hex()
@@ -103,5 +104,17 @@ def index(selected_city="Cape Town", date_offset=0):
     cities_list = read_cities_from_csv('cities.csv')
     return render_template('times.html', **times_data, city=city, cities=cities_list)
 
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5431)
+    default_port = 5431
+
+    if len(sys.argv) > 1:
+        try:
+            port = int(sys.argv[1])
+        except ValueError:
+            print("Invalid port number. Using default port.")
+            port = default_port
+    else:
+        port = default_port
+
+    app.run(host="0.0.0.0", port=port)
