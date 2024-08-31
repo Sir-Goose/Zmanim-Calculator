@@ -45,6 +45,8 @@ class TestTimes(unittest.TestCase):
         self.assertEqual(self.CityTimes.get_current_english_date_words(), "23 August 2024")
     def test_is_friday(self):
         self.assertEqual(self.CityTimes.is_friday(), True)
+    def test_is_saturday(self):
+        self.assertEqual(self.CityTimes.is_saturday(), False)
     def test_candle_lighting(self):
         self.assertEqual(self.CityTimes.candle_lighting(), "18:04")
 

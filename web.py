@@ -92,6 +92,7 @@ def get_times_data(city: str, date_offset: int):
     times_data['current_date_hebrew'] = CityTimes.get_current_hebrew_date_words()
     times_data['current_date_english'] = CityTimes.get_current_english_date_words()
     times_data['is_friday'] = CityTimes.is_friday()
+    times_data['is_saturday'] = CityTimes.is_saturday()
     times_data['candle_lighting'] = CityTimes.candle_lighting()
     return times_data
 
