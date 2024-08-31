@@ -255,6 +255,14 @@ class Times:
         else:
             return False
 
+    def is_saturday(self):
+        day = sun(self.location.observer, date=self.current_date)['sunrise']
+        day = day.strftime("%A")
+        if day == "Saturday":
+            return True
+        else:
+            return False
+
     def candle_lighting(self):
         sunset_time = self.sunset()
         sunset_time_obj = datetime.strptime(sunset_time, "%H:%M")
