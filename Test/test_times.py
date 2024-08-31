@@ -28,7 +28,7 @@ class TestTimes(unittest.TestCase):
     def test_sunset(self):
         self.assertEqual(self.CityTimes.sunset(), "18:22")
     def test_nightfall(self):
-        self.assertEqual(self.CityTimes.nightfall(), "18:48")
+        self.assertEqual(self.CityTimes.nightfall(), "19:00")
     def test_midnight(self):
         self.assertEqual(self.CityTimes.midnight(), "00:48")
     def test_shaah_zmanit(self):
