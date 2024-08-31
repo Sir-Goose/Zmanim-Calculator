@@ -67,16 +67,23 @@
                 </form>
             </div>
 
-            {% if is_friday %}
+            {% if is_friday or is_saturday %}
             <table class="shabbat-table">
                 <tr>
                     <th>Shabbat</th>
                     <th>Time</th>
                 </tr>
+                {% if is_friday %}
                 <tr>
                     <td>Candle Lighting</td>
                     <td>{{ candle_lighting }}</td>
                 </tr>
+                {% endif %} {% if is_saturday %}
+                <tr>
+                    <td>Nightfall (Three Visible Stars)</td>
+                    <td>{{ nightfall }}</td>
+                </tr>
+                {% endif %}
             </table>
             {% endif %}
 
