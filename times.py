@@ -184,13 +184,13 @@ class Times:
         return sunset_time
 
     def nightfall(self):
-        nightfall = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=6)
+        nightfall = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=8.5)
 
-        nightfall_time_utc = nightfall['dusk']
+        nightfall = nightfall['dusk']
 
-        nightfall_time_utc_plus_2 = nightfall_time_utc.astimezone(self.object_timezone)
+        nightfall= nightfall.astimezone(self.object_timezone)
 
-        nightfall_time = nightfall_time_utc_plus_2.strftime("%H:%M")
+        nightfall_time = nightfall.strftime("%H:%M")
         return nightfall_time
 
     def midnight(self):
