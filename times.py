@@ -50,7 +50,7 @@ class Times:
         dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
         dawn_time_utc = dawn['dawn']
         dawn_time_city = dawn_time_utc.astimezone(self.object_timezone)
-        dawn_time = dawn_time_city.strftime("%H:%M")
+        dawn_time = self.format_time(dawn_time_city)
         return dawn_time
 
     def earliest_tallit_tefillin(self):
@@ -59,7 +59,7 @@ class Times:
 
         adjust_tallit_tefillin = tallit_tefillin_utc.astimezone(self.object_timezone)
 
-        tallit_tefillin_time = adjust_tallit_tefillin.strftime("%H:%M")
+        tallit_tefillin_time = self.format_time(adjust_tallit_tefillin)
         return tallit_tefillin_time
 
     def sunrise(self) -> str:
@@ -68,33 +68,33 @@ class Times:
 
         adjusted_sunrise = sunrise_utc.astimezone(self.object_timezone)
 
-        sunrise_time = adjusted_sunrise.strftime("%H:%M")
+        sunrise_time = self.format_time(adjusted_sunrise)
         return sunrise_time
 
     def latest_shema(self):
         hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = hanetz_amiti.strftime("%H:%M")
+        hanetz_amiti = self.format_time(hanetz_amiti)
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
 
         minutes = int(self.shaah_zmanit() * 60 * 3)
 
         latest_shema = time_obj + timedelta(minutes=minutes)
-        latest_shema = latest_shema.strftime("%H:%M")
+        latest_shema = self.format_time(latest_shema)
 
         return latest_shema
 
     def latest_shacharit(self):
         hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = hanetz_amiti.strftime("%H:%M")
+        hanetz_amiti = self.format_time(hanetz_amiti)
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
         minutes = int(self.shaah_zmanit() * 60 * 4)
         latest_shacharit = time_obj + timedelta(minutes=minutes)
 
-        latest_shacharit = latest_shacharit.strftime("%H:%M")
+        latest_shacharit = self.format_time(latest_shacharit)
 
         return latest_shacharit
 
@@ -125,13 +125,13 @@ class Times:
 
         midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
 
-        midday_time = midpoint_time_utc_plus_2.strftime("%H:%M")
+        midday_time = self.format_time(midpoint_time_utc_plus_2)
         return midday_time
 
     def earliest_mincha(self):
         hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = hanetz_amiti.strftime("%H:%M")
+        hanetz_amiti = self.format_time(hanetz_amiti)
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
 
@@ -139,14 +139,14 @@ class Times:
 
         earliest_mincha = time_obj + timedelta(minutes=minutes)
 
-        earliest_mincha = earliest_mincha.strftime("%H:%M")
+        earliest_mincha = self.format_time(earliest_mincha)
 
         return earliest_mincha
 
     def mincha_ketana(self):
         shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
         shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
-        shkiah_amitis = shkiah_amitis.strftime("%H:%M")
+        shkiah_amitis = self.format_time(shkiah_amitis)
 
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
 
@@ -154,14 +154,14 @@ class Times:
 
         mincha_ketana_time = time_obj - timedelta(minutes=minutes)
 
-        mincha_ketana_time = mincha_ketana_time.strftime("%H:%M")
+        mincha_ketana_time = self.format_time(mincha_ketana_time)
 
         return mincha_ketana_time
 
     def plag_hamincha(self):
         shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
         shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
-        shkiah_amitis = shkiah_amitis.strftime("%H:%M")
+        shkiah_amitis = self.format_time(shkiah_amitis)
 
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
 
@@ -169,7 +169,7 @@ class Times:
 
         plag_hamincha_time = time_obj - timedelta(minutes=minutes)
 
-        plag_hamincha_time = plag_hamincha_time.strftime("%H:%M")
+        plag_hamincha_time = self.format_time(plag_hamincha_time)
 
         return plag_hamincha_time
 
@@ -180,7 +180,7 @@ class Times:
 
         sunset_utc_plus_2 = sunset_utc.astimezone(self.object_timezone)
 
-        sunset_time = sunset_utc_plus_2.strftime("%H:%M")
+        sunset_time = self.format_time(sunset_utc_plus_2)
         return sunset_time
 
     def nightfall(self):
@@ -188,9 +188,9 @@ class Times:
 
         nightfall = nightfall['dusk']
 
-        nightfall= nightfall.astimezone(self.object_timezone)
+        nightfall = nightfall.astimezone(self.object_timezone)
 
-        nightfall_time = nightfall.strftime("%H:%M")
+        nightfall_time = self.format_time(nightfall)
         return nightfall_time
 
     def midnight(self):
@@ -204,7 +204,7 @@ class Times:
 
         midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
 
-        midnight_time = midpoint_time_utc_plus_2.strftime("%H:%M")
+        midnight_time = self.format_time(midpoint_time_utc_plus_2)
         return midnight_time
 
     def shaah_zmanit(self):
@@ -269,3 +269,9 @@ class Times:
         sunset_time_obj = sunset_time_obj - timedelta(minutes=18)
         candle_lighting_time = sunset_time_obj.strftime("%H:%M")
         return candle_lighting_time
+
+    def format_time(self, time):
+        if time.second >= 30:
+            time += timedelta(minutes=1)
+        time = time.strftime("%H:%M")
+        return time
