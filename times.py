@@ -42,38 +42,35 @@ class Times:
             self.str_timezone = "UTC"
         self.object_timezone = timezone(self.str_timezone)
 
-    def dawn(self):
-        dawn = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
-        dawn_time_utc = dawn['dawn']
-        dawn_time_city = dawn_time_utc.astimezone(self.object_timezone)
-        dawn_time = self.format_time(dawn_time_city)
-        return dawn_time
+    def dawn(self) -> str:
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=16.9)
+        dawn = sun_times['dawn']
+        dawn = dawn.astimezone(self.object_timezone)
+        dawn = self.format_time(dawn)
+        return dawn
 
     def earliest_tallit_tefillin(self):
-        tallit_tefillin = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=10.2)
-        tallit_tefillin_utc = tallit_tefillin['dawn']
-
-        adjust_tallit_tefillin = tallit_tefillin_utc.astimezone(self.object_timezone)
-
-        tallit_tefillin_time = self.format_time(adjust_tallit_tefillin)
-        return tallit_tefillin_time
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=10.2)
+        tallit_tefillin = sun_times['dawn']
+        tallit_tefillin = tallit_tefillin.astimezone(self.object_timezone)
+        tallit_tefillin = self.format_time(tallit_tefillin)
+        return tallit_tefillin
 
     def sunrise(self) -> str:
         sun_times = sun(self.location.observer, date=self.current_date)
-        sunrise_utc = sun_times['sunrise']
+        sunrise = sun_times['sunrise']
+        sunrise = sunrise.astimezone(self.object_timezone)
+        sunrise = self.format_time(sunrise)
+        return sunrise
 
-        adjusted_sunrise = sunrise_utc.astimezone(self.object_timezone)
-
-        sunrise_time = self.format_time(adjusted_sunrise)
-        return sunrise_time
-
+    # TO DO: remove superfurlous hanetz amiti calculation
     def latest_shema(self):
-        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
+        hanetz_amiti = sun_times['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
         hanetz_amiti = self.format_time(hanetz_amiti)
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
-
         minutes = int(self.shaah_zmanit() * 60 * 3)
 
         latest_shema = time_obj + timedelta(minutes=minutes)
@@ -81,6 +78,7 @@ class Times:
 
         return latest_shema
 
+    # and here
     def latest_shacharit(self):
         hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
@@ -95,20 +93,15 @@ class Times:
         return latest_shacharit
 
     def hanetz_amiti(self):
-        true_sunrise = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
-
-        true_sunrise_utc = true_sunrise['dawn']
-        true_sunrise = true_sunrise_utc.astimezone(self.object_timezone)
-
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
+        true_sunrise = sun_times['dawn']
+        true_sunrise = true_sunrise.astimezone(self.object_timezone)
         return true_sunrise
 
     def shkiah_amitis(self):
-        true_sunset = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
-
-        true_sunset = true_sunset['dusk']
-
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
+        true_sunset = sun_times['dusk']
         true_sunset = true_sunset.astimezone(self.object_timezone)
-
         return true_sunset
 
     def midday(self):
@@ -116,27 +109,22 @@ class Times:
         end_time = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
 
         time_diff = end_time - start_time
+        midday = start_time + time_diff / 2
 
-        midpoint_time_utc = start_time + time_diff / 2
+        midday = midday.astimezone(self.object_timezone)
+        midday = self.format_time(midday)
+        return midday
 
-        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
-
-        midday_time = self.format_time(midpoint_time_utc_plus_2)
-        return midday_time
-
+    # and here
     def earliest_mincha(self):
         hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
         hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
         hanetz_amiti = self.format_time(hanetz_amiti)
 
         time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
-
         minutes = int(self.shaah_zmanit() * 60 * 6.5)
-
         earliest_mincha = time_obj + timedelta(minutes=minutes)
-
         earliest_mincha = self.format_time(earliest_mincha)
-
         return earliest_mincha
 
     def mincha_ketana(self):
@@ -145,14 +133,10 @@ class Times:
         shkiah_amitis = self.format_time(shkiah_amitis)
 
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
-
         minutes = int(self.shaah_zmanit() * 60 * 2.5)
-
-        mincha_ketana_time = time_obj - timedelta(minutes=minutes)
-
-        mincha_ketana_time = self.format_time(mincha_ketana_time)
-
-        return mincha_ketana_time
+        mincha_ketana = time_obj - timedelta(minutes=minutes)
+        mincha_ketana = self.format_time(mincha_ketana)
+        return mincha_ketana
 
     def plag_hamincha(self):
         shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
@@ -162,30 +146,22 @@ class Times:
         time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
 
         minutes = int(self.shaah_zmanit() * 60 * 1.25)
-
-        plag_hamincha_time = time_obj - timedelta(minutes=minutes)
-
-        plag_hamincha_time = self.format_time(plag_hamincha_time)
-
-        return plag_hamincha_time
+        plag_hamincha = time_obj - timedelta(minutes=minutes)
+        plag_hamincha = self.format_time(plag_hamincha)
+        return plag_hamincha
 
     def sunset(self):
         sun_times = sun(self.location.observer, date=self.current_date)
-
-        sunset_utc = sun_times['sunset']
-
-        sunset_utc_plus_2 = sunset_utc.astimezone(self.object_timezone)
-
-        sunset_time = self.format_time(sunset_utc_plus_2)
-        return sunset_time
+        sunset = sun_times['sunset']
+        sunset = sunset.astimezone(self.object_timezone)
+        sunset = self.format_time(sunset)
+        return sunset
 
     def nightfall(self):
-        nightfall = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=8.5)
+        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=8.5)
 
-        nightfall = nightfall['dusk']
-
+        nightfall = sun_times['dusk']
         nightfall = nightfall.astimezone(self.object_timezone)
-
         nightfall_time = self.format_time(nightfall)
         return nightfall_time
 
@@ -196,18 +172,16 @@ class Times:
 
         time_diff = end_time - start_time
 
-        midpoint_time_utc = start_time + time_diff / 2
-
-        midpoint_time_utc_plus_2 = midpoint_time_utc.astimezone(self.object_timezone)
-
-        midnight_time = self.format_time(midpoint_time_utc_plus_2)
-        return midnight_time
+        midpoint = start_time + time_diff / 2
+        midpoint = midpoint.astimezone(self.object_timezone)
+        midnight = self.format_time(midpoint)
+        return midnight
 
     def shaah_zmanit(self):
-        time1 = self.hanetz_amiti()
-        time2 = self.shkiah_amitis()
+        true_sunrise = self.hanetz_amiti()
+        true_sunset = self.shkiah_amitis()
 
-        time_diff = time2 - time1
+        time_diff = true_sunset - true_sunrise
         prop_hour = time_diff.seconds / 3600 / 12
 
         result = round(prop_hour, 4)
@@ -223,7 +197,7 @@ class Times:
         number_date = self.get_current_hebrew_date()
         number_date = number_date.strip()
         number_date = number_date.split(' ')
-        print(number_date)
+        #print(number_date)
         word_date = hebrew_converter.convert_to_words(number_date[0], number_date[1], number_date[2])
         return word_date
 
@@ -260,11 +234,11 @@ class Times:
             return False
 
     def candle_lighting(self):
-        sunset_time = self.sunset()
-        sunset_time_obj = datetime.strptime(sunset_time, "%H:%M")
-        sunset_time_obj = sunset_time_obj - timedelta(minutes=18)
-        candle_lighting_time = sunset_time_obj.strftime("%H:%M")
-        return candle_lighting_time
+        sunset = self.sunset()
+        sunset = datetime.strptime(sunset, "%H:%M")
+        sunset = sunset - timedelta(minutes=18)
+        candle_lighting = sunset.strftime("%H:%M")
+        return candle_lighting
 
     def format_time(self, time):
         if time.second >= 30:
