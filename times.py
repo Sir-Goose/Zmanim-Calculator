@@ -63,36 +63,20 @@ class Times:
         sunrise = self.format_time(sunrise)
         return sunrise
 
-    # TO DO: remove superfurlous hanetz amiti calculation
     def latest_shema(self):
-        sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
-        hanetz_amiti = sun_times['dawn']
-        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = self.format_time(hanetz_amiti)
-
-        time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
         minutes = int(self.shaah_zmanit() * 60 * 3)
-
-        latest_shema = time_obj + timedelta(minutes=minutes)
+        latest_shema = self.hanetz_amiti() + timedelta(minutes=minutes)
         latest_shema = self.format_time(latest_shema)
-
         return latest_shema
 
     # and here
     def latest_shacharit(self):
-        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
-        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = self.format_time(hanetz_amiti)
-
-        time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
         minutes = int(self.shaah_zmanit() * 60 * 4)
-        latest_shacharit = time_obj + timedelta(minutes=minutes)
-
+        latest_shacharit = self.hanetz_amiti() + timedelta(minutes=minutes)
         latest_shacharit = self.format_time(latest_shacharit)
-
         return latest_shacharit
 
-    def hanetz_amiti(self):
+    def hanetz_amiti(self) -> datetime:
         sun_times = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)
         true_sunrise = sun_times['dawn']
         true_sunrise = true_sunrise.astimezone(self.object_timezone)
@@ -115,38 +99,21 @@ class Times:
         midday = self.format_time(midday)
         return midday
 
-    # and here
     def earliest_mincha(self):
-        hanetz_amiti = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dawn']
-        hanetz_amiti = hanetz_amiti.astimezone(self.object_timezone)
-        hanetz_amiti = self.format_time(hanetz_amiti)
-
-        time_obj = datetime.strptime(hanetz_amiti, "%H:%M")
         minutes = int(self.shaah_zmanit() * 60 * 6.5)
-        earliest_mincha = time_obj + timedelta(minutes=minutes)
+        earliest_mincha = self.hanetz_amiti() + timedelta(minutes=minutes)
         earliest_mincha = self.format_time(earliest_mincha)
         return earliest_mincha
 
     def mincha_ketana(self):
-        shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
-        shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
-        shkiah_amitis = self.format_time(shkiah_amitis)
-
-        time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
         minutes = int(self.shaah_zmanit() * 60 * 2.5)
-        mincha_ketana = time_obj - timedelta(minutes=minutes)
+        mincha_ketana = self.shkiah_amitis() - timedelta(minutes=minutes)
         mincha_ketana = self.format_time(mincha_ketana)
         return mincha_ketana
 
     def plag_hamincha(self):
-        shkiah_amitis = sun(self.location.observer, date=self.current_date, dawn_dusk_depression=1.583)['dusk']
-        shkiah_amitis = shkiah_amitis.astimezone(self.object_timezone)
-        shkiah_amitis = self.format_time(shkiah_amitis)
-
-        time_obj = datetime.strptime(shkiah_amitis, "%H:%M")
-
         minutes = int(self.shaah_zmanit() * 60 * 1.25)
-        plag_hamincha = time_obj - timedelta(minutes=minutes)
+        plag_hamincha = self.shkiah_amitis() - timedelta(minutes=minutes)
         plag_hamincha = self.format_time(plag_hamincha)
         return plag_hamincha
 
