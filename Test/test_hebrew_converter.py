@@ -6,7 +6,21 @@ class TestTimes(unittest.TestCase):
         ...
 
     def test_calc_month_name(self):
-        self.assertEqual(hebrew_converter.calc_month_name(5784, 1), "Nissan")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 1), "Nisan")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 2), "Iyar")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 3), "Sivan")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 4), "Tammuz")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 5), "Av")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 6), "Elul")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 7), "Tishrei")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 8), "Cheshvan")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 9), "Kislev")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 10), "Tevet")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 11), "Shevat")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 12), "Adar I")
+        self.assertEqual(hebrew_converter.calc_month_name(5785, 12), "Adar")
+        self.assertEqual(hebrew_converter.calc_month_name(5784, 13), "Adar II")
+
 
     def test_is_leap_year(self):
         self.assertTrue(hebrew_converter.is_leap_year(5784))
