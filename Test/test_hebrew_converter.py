@@ -3,7 +3,20 @@ import hebrew_converter
 
 class TestTimes(unittest.TestCase):
     def test_convert_to_words(self):
-        ...
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "1", "1"), "1 Nisan 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "2", "3"), "3 Iyar 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "3", "4"), "4 Sivan 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "4", "5"), "5 Tammuz 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "5", "6"), "6 Av 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "6", "7"), "7 Elul 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "7", "8"), "8 Tishrei 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "8", "9"), "9 Cheshvan 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "9", "10"), "10 Kislev 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "10", "11"), "11 Tevet 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "11", "12"), "12 Shevat 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "12", "13"), "13 Adar I 5784")
+        self.assertEqual(hebrew_converter.convert_to_words("5785", "12", "13"), "13 Adar 5785")
+        self.assertEqual(hebrew_converter.convert_to_words("5784", "13", "14"), "14 Adar II 5784")
 
     def test_calc_month_name(self):
         self.assertEqual(hebrew_converter.calc_month_name(5784, 1), "Nisan")
