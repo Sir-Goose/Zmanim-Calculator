@@ -150,8 +150,7 @@ class Times:
         time_diff = true_sunset - true_sunrise
         prop_hour = time_diff.seconds / 3600 / 12
 
-        result = round(prop_hour, 4)
-        return result
+        return prop_hour
 
     def get_current_hebrew_date(self) -> str:
         hebrew_date = hebrew.from_gregorian(self.current_date.year, self.current_date.month, self.current_date.day)
