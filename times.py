@@ -25,7 +25,7 @@ class Times:
     str_timezone: str
     object_timezone: StaticTzInfo | DstTzInfo | Any
 
-    def __init__(self, city: str, date_offset: int, current_date: date | None=None):
+    def __init__(self, city: str, date_offset: int, current_date: date | None=None) -> None:
         self.city = city
         self.offset = date_offset
         self.latitude, self.longitude = self.cities.get_coordinates(city)
