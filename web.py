@@ -54,6 +54,10 @@ def search():
         return render_template('home.html', error=f"An error occurred: {str(e)}")
     return index()
 
+@app.route('/info', methods=['GET'])
+def info():
+    return render_template('info.html')
+
 
 @app.route('/update_offset', methods=['POST'])
 def update_offset():
