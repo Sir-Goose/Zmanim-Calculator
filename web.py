@@ -4,6 +4,7 @@ from fuzzywuzzy import process
 import csv
 import times
 import cities
+import info_text
 import os
 import sys
 
@@ -56,7 +57,8 @@ def search():
 
 @app.route('/info', methods=['GET'])
 def info():
-    return render_template('info.html')
+    explanations = get_explanations()
+    return render_template('info.html', **explanations)
 
 
 @app.route('/update_offset', methods=['POST'])
@@ -101,6 +103,22 @@ def get_times_data(city: str, date_offset: int):
     times_data['candle_lighting'] = CityTimes.candle_lighting()
     return times_data
 
+def get_explanations():
+    explanations = {}
+    explanations['dawn'] = info_text.dawn()
+    explanations['earliest_tallit'] = info_text.earliest_tallit()
+    explanations['sunrise'] = info_text.sunrise()
+    explanations['latest_shema'] = info_text.latest_shema()
+    explanations['latest_shacharit'] = info_text.latest_shacharit()
+    explanations['midday'] = info_text.midday()
+    explanations['earliest_mincha'] = info_text.earliest_mincha()
+    explanations['mincha_ketanah'] = info_text.mincha_ketanah()
+    explanations['plag_hamincha'] = info_text.plag_hamincha()
+    explanations['sunset'] = info_text.sunset()
+    explanations['nightfall'] = info_text.nightfall()
+    explanations['midnight'] = info_text.midnight()
+    explanations['shaaz_zmanit'] = info_text.shaah_zmanit()
+    return explanations
 
 def index(selected_city="Cape Town", date_offset=0):
     city = selected_city or "Cape Town"
