@@ -151,6 +151,7 @@ if __name__ == '__main__':
     else:
         port = default_port
 
+    print("Hashing styles.css")
     def get_file_hash(filename):
         with open(join('static', filename), 'rb') as file:
             file_hash = hashlib.md5(file.read()).hexdigest()
