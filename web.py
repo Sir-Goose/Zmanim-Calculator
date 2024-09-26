@@ -117,7 +117,7 @@ def get_explanations():
     explanations['sunset'] = info_text.sunset()
     explanations['nightfall'] = info_text.nightfall()
     explanations['midnight'] = info_text.midnight()
-    explanations['shaaz_zmanit'] = info_text.shaah_zmanit()
+    explanations['shaah_zmanit'] = info_text.shaah_zmanit()
     return explanations
 
 def index(selected_city="Cape Town", date_offset=0):
