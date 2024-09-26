@@ -75,12 +75,20 @@
                 </tr>
                 {% if is_friday %}
                 <tr>
-                    <td>Candle Lighting</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#candle_lighting"
+                            >Candle Lighting</a
+                        >
+                    </td>
                     <td>{{ candle_lighting }}</td>
                 </tr>
                 {% endif %} {% if is_saturday %}
                 <tr>
-                    <td>Nightfall (Three Visible Stars)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#nightfall"
+                            >Nightfall (Three Visible Stars)</a
+                        >
+                    </td>
                     <td>{{ nightfall }}</td>
                 </tr>
                 {% endif %}
@@ -93,55 +101,107 @@
                     <th>Time</th>
                 </tr>
                 <tr>
-                    <td>Dawn (Alot Hashachar)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#dawn"
+                            >Dawn (Alot Hashachar)</a
+                        >
+                    </td>
                     <td>{{ dawn }}</td>
                 </tr>
                 <tr>
-                    <td>Earliest Tallit and Tefillin (Misheyakir)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#earliest_tallit"
+                            >Earliest Tallit and Tefillin (Misheyakir)</a
+                        >
+                    </td>
                     <td>{{ earliest_tallit }}</td>
                 </tr>
                 <tr>
-                    <td>Sunrise (Hanetz Hachamah)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#sunrise"
+                            >Sunrise (Hanetz Hachamah)</a
+                        >
+                    </td>
                     <td>{{ sunrise }}</td>
                 </tr>
                 <tr>
-                    <td>Latest Shema</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#latest_shema"
+                            >Latest Shema</a
+                        >
+                    </td>
                     <td>{{ latest_shema }}</td>
                 </tr>
                 <tr>
-                    <td>Latest Shacharit</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#latest_shacharit"
+                            >Latest Shacharit</a
+                        >
+                    </td>
                     <td>{{ latest_shacharit }}</td>
                 </tr>
                 <tr>
-                    <td>Midday (Chatzot Hayom)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#midday"
+                            >Midday (Chatzot Hayom)</a
+                        >
+                    </td>
                     <td>{{ midday }}</td>
                 </tr>
                 <tr>
-                    <td>Earliest Mincha (Mincha Gedolah)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#earliest_mincha"
+                            >Earliest Mincha (Mincha Gedolah)</a
+                        >
+                    </td>
                     <td>{{ earliest_mincha }}</td>
                 </tr>
                 <tr>
-                    <td>Mincha Ketanah ("Small Mincha")</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#mincha_ketanah"
+                            >Mincha Ketanah ("Small Mincha")</a
+                        >
+                    </td>
                     <td>{{ mincha_ketana }}</td>
                 </tr>
                 <tr>
-                    <td>Plag Hamincha ("Half of Mincha")</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#plag_hamincha"
+                            >Plag Hamincha ("Half of Mincha")</a
+                        >
+                    </td>
                     <td>{{ plag_hamincha }}</td>
                 </tr>
                 <tr>
-                    <td>Sunset (Shkiah)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#sunset"
+                            >Sunset (Shkiah)</a
+                        >
+                    </td>
                     <td>{{ sunset }}</td>
                 </tr>
                 <tr>
-                    <td>Nightfall (Tzeit Hakochavim)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#nightfall"
+                            >Nightfall (Tzeit Hakochavim)</a
+                        >
+                    </td>
                     <td>{{ nightfall }}</td>
                 </tr>
                 <tr>
-                    <td>Midnight (Chatzot HaLailah)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#midnight"
+                            >Midnight (Chatzot HaLailah)</a
+                        >
+                    </td>
                     <td>{{ midnight }}</td>
                 </tr>
                 <tr>
-                    <td>Shaah Zmanit (proportional hour)</td>
+                    <td>
+                        <a href="{{ url_for('info') }}#shaah_zmanit"
+                            >Shaah Zmanit (proportional hour)</a
+                        >
+                    </td>
                     <td>{{ shaah_zmanit }} minutes</td>
                 </tr>
             </table>
