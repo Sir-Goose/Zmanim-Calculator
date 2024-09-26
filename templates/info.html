@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <link
+            rel="shortcut icon"
+            href="{{ url_for('static', filename='favicon.ico') }}"
+            type="image/x-icon"
+        />
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <title>Calculation Methodology</title>
+    </head>
+    <body>
+        <h1><a href="{{ url_for('home') }}">Calculation Methodology</a></h1>
+        <main>
+            <header></header>
+            <div class="content-container">
+                <section></section>
+                <section>
+                    <h2>Dawn (Alot Hashachar)</h2>
+                    <p>{{ dawn }}</p>
+                </section>
+                <section>
+                    <h2>Earliest Tallit and Tefillin (Misheyakir)</h2>
+                    <p>{{ earliest_tallit }}</p>
+                </section>
+                <section>
+                    <h2>Sunrise (Hanetz Hachamah)</h2>
+                    <p>{{ sunrise }}</p>
+                </section>
+                <section>
+                    <h2>Latest Shema</h2>
+                    <p>{{ latest_shema }}</p>
+                </section>
+                <section>
+                    <h2>Latest Shacharit</h2>
+                    <p>{{ latest_shacharit }}</p>
+                </section>
+                <section>
+                    <h2>Midday (Chatzot Hayom)</h2>
+                    <p>{{ midday }}</p>
+                </section>
+                <section>
+                    <h2>Earliest Mincha (Mincha Gedolah)</h2>
+                    <p>{{ earliest_mincha }}</p>
+                </section>
+                <section>
+                    <h2>Mincha Ketanah ("Small Mincha")</h2>
+                    <p>{{ mincha_ketanah }}</p>
+                </section>
+                <section>
+                    <h2>Plag Hamincha ("Half of Mincha")</h2>
+                    <p>{{ plag_hamincha }}</p>
+                </section>
+                <section>
+                    <h2>Sunset (Shkiah)</h2>
+                    <p>{{ sunset }}</p>
+                </section>
+                <section>
+                    <h2>Nightfall (Tzeit Hakochavim)</h2>
+                    <p>{{ nightfall }}</p>
+                </section>
+                <section>
+                    <h2>Midnight (Chatzot HaLailah)</h2>
+                    <p>{{ midnight }}</p>
+                </section>
+                <section>
+                    <h2>Shaah Zmanit (proportional hour)</h2>
+                    <p>{{ shaah_zmanit }}</p>
+                </section>
+            </div>
+        </main>
+    </body>
+</html>
