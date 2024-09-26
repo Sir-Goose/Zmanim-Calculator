@@ -114,6 +114,7 @@ def get_explanations():
     explanations['earliest_mincha'] = info_text.earliest_mincha()
     explanations['mincha_ketanah'] = info_text.mincha_ketanah()
     explanations['plag_hamincha'] = info_text.plag_hamincha()
+    explanations['candle_lighting'] = info_text.candle_lighting()
     explanations['sunset'] = info_text.sunset()
     explanations['nightfall'] = info_text.nightfall()
     explanations['midnight'] = info_text.midnight()

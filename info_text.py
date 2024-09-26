@@ -61,6 +61,12 @@ def plag_hamincha():
     It is calculated as 1.25 proportional hours before the halachic sunset."""
     return explanation
 
+def candle_lighting():
+    explanation = """Candles should be lit before this time on Erev Shabbat and Yom Tov.
+    It is a mitzvah to add a few minutes to Shabbat before it starts and ends.
+    As is the most prevalent custom this time is calculated as 18 minutes before sunset"""
+    return explanation
+
 def sunset():
     explanation = """Sunrise is the moment when the top of the sun's disk
     falls below the horizon. A new day in the Hebrew calendar begins at this
