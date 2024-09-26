@@ -15,7 +15,7 @@ def earliest_tallit():
 
 def sunrise():
     explanation = """Sunrise is the moment when the top of sun's disk becomes
-    visible at sea level. One should begin the morning Amidah no earlier than this time.
+    visible at sea level. One should not begin the morning Amidah before sunrise.
     Most daytime mitzvot should be performed after this time."""
     return explanation
 
@@ -68,7 +68,7 @@ def candle_lighting():
     return explanation
 
 def sunset():
-    explanation = """Sunrise is the moment when the top of the sun's disk
+    explanation = """Sunset is the moment when the top of the sun's disk
     falls below the horizon. A new day in the Hebrew calendar begins at this
     time. All daytime mitzvot should be completed before sunset."""
     return explanation
