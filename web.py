@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from datetime import datetime, date
 from fuzzywuzzy import process
+from os.path import join
 import csv
 import times
 import cities
 import info_text
 import os
 import sys
+import hashlib
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24).hex()
@@ -79,6 +81,15 @@ def update_offset():
 
     return redirect(url_for('search', query=city, date_offset=new_offset))
 
+@app.context_processor
+def utility_processor():
+    def get_file_hash(filename):
+        with open(join('static', filename), 'rb') as file:
+            file_hash = hashlib.md5(file.read()).hexdigest()
+        return f"styles.{file_hash}.css"
+
+    return dict(get_file_hash=get_file_hash)
+
 
 def get_times_data(city: str, date_offset: int):
     CityTimes = times.Times(city, date_offset)
@@ -139,5 +150,23 @@ if __name__ == '__main__':
             port = default_port
     else:
         port = default_port
+
+    def get_file_hash(filename):
+        with open(join('static', filename), 'rb') as file:
+            file_hash = hashlib.md5(file.read()).hexdigest()
+        return file_hash
+
+    original_filename = 'styles.css'
+    new_filename = f"styles.{get_file_hash(original_filename)}.css"
+    original_file_path = join('static', original_filename)
+    new_file_path = join('static', new_filename)
+
+    with open(original_file_path, 'rb') as original_file:
+        with open(new_file_path, 'wb') as new_file:
+            new_file.write(original_file.read())
+
+    for filename in os.listdir(join('static')):
+        if filename.startswith('styles.') and filename != new_filename and filename != original_filename:
+            os.remove(join('static', filename))
 
     app.run(host="0.0.0.0", port=port)
