@@ -224,6 +224,15 @@ td {
     border-bottom: 1px solid #d8d8d2;
 }
 
+td a {
+    color: #202124;
+    text-decoration: none;
+}
+
+td a:hover {
+    text-decoration: underline;  /* or none if you want no decoration */
+}
+
 th {
     background-color: #f5f5ef;
     font-weight: 600;
