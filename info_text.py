@@ -6,7 +6,7 @@ def dawn() -> str:
     return explanation
 
 def earliest_tallit():
-    explanation = """Misheyakir occurs jast after dawn. It is traditionally defined as
+    explanation = """Misheyakir occurs just after dawn. It is traditionally defined as
     the time at which one can recognize another person four cubits away. This is the earliest time to
     wear tzitzit and tefilin and to recite the Shema.
 
