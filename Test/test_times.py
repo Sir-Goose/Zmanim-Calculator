@@ -4,7 +4,7 @@ from datetime import datetime, date
 from pytz import timezone
 
 class TestTimes(unittest.TestCase):
-    CityTimes = times.Times("Cape Town", 0, date(2024, 8 , 23))
+    CityTimes = times.Times("Cape Town", 0, None, date(2024, 8 , 23))
     def test_dawn(self):
         self.assertEqual(self.CityTimes.dawn(), "05:57")
 

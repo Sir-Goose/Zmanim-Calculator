@@ -272,6 +272,41 @@ tr:last-child td {
     vertical-align: middle;
 }
 
+.reset-button {
+    background-color: #ba5b37;
+    border: none;
+    color: white;
+    padding: 3px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.reset-button i {
+    vertical-align: middle;
+}
+.set-date-button {
+    background-color: #ba5b37;
+    border: none;
+    color: white;
+    padding: 3px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.set-date-button i {
+    vertical-align: middle;
+}
+
 /* Styles for info.html */
 .content-container {
     background-color: #f5f4ef;

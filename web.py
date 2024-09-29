@@ -45,12 +45,17 @@ def search():
             query = query.replace('+', ' ')
             date_offset = int(request.args.get('date_offset', 0))
             session['date_offset'] = date_offset
+            custom_date = str(request.args.get('custom_date', None))
+            session['custom_date'] = custom_date
 
             # Fuzzy search
             best_match = process.extractOne(query, cities_list)
             if best_match:
                 matched_city = best_match[0]
-                return index(matched_city, date_offset)
+                if custom_date != None and custom_date != 'None':
+                    return index(matched_city, date_offset, custom_date)
+                else:
+                    return index(matched_city, date_offset)
             else:
                 return render_template('home.html', error="City not found. Please try again.")
     except Exception as e:
@@ -68,18 +73,29 @@ def update_offset():
     city = request.form.get('city')
     action = request.form.get('action')
     offset = request.form.get('current_offset')
+
     new_offset = 0
+
     if offset:
         current_offset = int(offset)
+    else:
+        current_offset = 0
 
-        if action == 'increment':
-            new_offset = current_offset + 1
-        elif action == "reset":
-            new_offset = 0
-        else:
-            new_offset = current_offset - 1
+    if action == 'increment':
+        new_offset = current_offset + 1
+    elif action == "reset":
+        new_offset = 0
+    elif action == 'decrement':
+        new_offset = current_offset - 1
 
     return redirect(url_for('search', query=city, date_offset=new_offset))
+
+@app.route('/set_date', methods=['POST'])
+def set_date():
+    city = request.form.get('city')
+    selected_date = request.form.get('date')
+
+    return redirect(url_for('search', query=city, custom_date=selected_date))
 
 @app.context_processor
 def utility_processor():
@@ -91,8 +107,8 @@ def utility_processor():
     return dict(get_file_hash=get_file_hash)
 
 
-def get_times_data(city: str, date_offset: int):
-    CityTimes = times.Times(city, date_offset)
+def get_times_data(city: str, date_offset: int, custom_date: None | str):
+    CityTimes = times.Times(city, date_offset, custom_date)
     times_data = {}
     times_data['dawn'] = CityTimes.dawn()
     times_data['earliest_tallit'] = CityTimes.earliest_tallit_tefillin()
@@ -132,9 +148,9 @@ def get_explanations():
     explanations['shaah_zmanit'] = info_text.shaah_zmanit()
     return explanations
 
-def index(selected_city="Cape Town", date_offset=0):
+def index(selected_city="Cape Town", date_offset=0, custom_date=None):
     city = selected_city or "Cape Town"
-    times_data = get_times_data(city, date_offset)
+    times_data = get_times_data(city, date_offset, custom_date)
     cities_list = read_cities_from_csv('cities.csv')
     return render_template('times.html', **times_data, city=city, cities=cities_list)
 

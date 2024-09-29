@@ -49,10 +49,36 @@
                         name="current_offset"
                         value="{{ session.get('date_offset', 0) }}"
                     />
-                    <button class="arrow-button" type="submit">
+                    <button class="reset-button" type="submit">
                         <i class="material-icons">restart_alt</i>
                     </button>
                 </form>
+                <div class="date-picker-container">
+                    <form
+                        id="date-form"
+                        action="{{ url_for('set_date') }}"
+                        method="POST"
+                    >
+                        <input type="hidden" name="city" value="{{ city }}" />
+                        <input type="hidden" name="action" value="set_date" />
+                        <input
+                            type="date"
+                            id="date-picker"
+                            name="date"
+                            value="{{ date }}"
+                            style="display: none"
+                        />
+                        <button
+                            class="set-date-button"
+                            type="button"
+                            id="date-picker-button"
+                        >
+                            <i class="material-icons">calendar_month</i>
+                        </button>
+                    </form>
+                </div>
+
+                <form></form>
                 <form action="{{ url_for('update_offset') }}" method="POST">
                     <input type="hidden" name="city" value="{{ city }}" />
                     <input type="hidden" name="action" value="increment" />
@@ -206,5 +232,27 @@
                 </tr>
             </table>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const datePickerButton =
+                    document.getElementById("date-picker-button");
+                const datePicker = document.getElementById("date-picker");
+                const dateForm = document.getElementById("date-form");
+
+                // When the calendar icon is clicked, show the date picker
+                datePickerButton.addEventListener("click", function () {
+                    if (datePicker.showPicker) {
+                        datePicker.showPicker();
+                    } else {
+                        datePicker.click();
+                    }
+                });
+
+                // When a new date is selected, submit the form
+                datePicker.addEventListener("change", function () {
+                    dateForm.submit();
+                });
+            });
+        </script>
     </body>
 </html>

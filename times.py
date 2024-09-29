@@ -25,7 +25,7 @@ class Times:
     str_timezone: str
     object_timezone: StaticTzInfo | DstTzInfo | Any
 
-    def __init__(self, city: str, date_offset: int, current_date: date | None=None) -> None:
+    def __init__(self, city: str, date_offset: int, custom_date: str | None=None, current_date: date | None=None) -> None:
         self.city = city
         self.offset = date_offset
         self.latitude, self.longitude = self.cities.get_coordinates(city)
@@ -34,6 +34,8 @@ class Times:
             self.current_date = datetime.now(timezone('UTC')).date()
         else:
             self.current_date = current_date
+        if custom_date:
+            self.current_date = datetime.strptime(custom_date, "%Y-%m-%d")
         self.current_date = self.current_date + timedelta(days=date_offset)
         time_zone_name = self.tf.timezone_at(lng=self.longitude, lat=self.latitude)
         if time_zone_name:
